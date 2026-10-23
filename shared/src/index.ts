@@ -1,0 +1,6 @@
+// Types shared by the client and the server (API request/response shapes, case types).
+
+export interface HealthResponse {
+  status: 'ok';
+  time: string;
+}
