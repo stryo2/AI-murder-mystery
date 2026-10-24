@@ -7,6 +7,7 @@ try {
 
 export const env = {
   PORT: Number(process.env.PORT ?? 3001),
+  LLM_PROVIDER: process.env.LLM_PROVIDER ?? 'gemini',
   LLM_API_KEY: process.env.LLM_API_KEY ?? '',
   LLM_MODEL: process.env.LLM_MODEL ?? '',
 };

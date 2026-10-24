@@ -1,0 +1,2789 @@
+{
+  "meta": {
+    "id": "the-last-stop",
+    "title": "The Last Stop",
+    "sourceDoc": "docs/the_last_stop_case_v1.2.md",
+    "version": "1.2",
+    "setting": "Scotland, 17 October 1934, aboard the Midnight Express crossing the Highlands towards Edinburgh",
+    "caseType": "closed-circle",
+    "synopsis": "Wealthy shipping industrialist Arthur Blackwood, 52, is found dead in his private compartment at 10:35 p.m. The door is latched and the window is shut. Over coffee he told the four people at his table that by morning \"one of you will wish you had never met me.\" Each of the four has a reason to fear him. Only one killed him.",
+    "timeFormat": "24h HH:MM, evening of 17 October 1934",
+    "poisonNote": "The poison is fictional. Its only properties: it acts within a few minutes of being swallowed, it gives off a faint medicinal smell, and its vial was sealed with dark-red wax. Never model it as a real substance or give real-world details about it.",
+    "trip": "Arthur is travelling to Edinburgh for a Blackwood Maritime board meeting and to see his solicitor, Mr Ross, the next morning.",
+    "player": {
+      "role": "A retired Scotland Yard inspector travelling in carriage B. After the death, the train guard asks them to look into it before the police take over.",
+      "timePressure": "Police will board at Perth at about 00:30. v1 has no hard timer; the arrival is flavour only.",
+      "briefing": "Arthur Blackwood was found dead in C1 at 22:35, and Dr Vale suspects he swallowed something. The four people in his corridor are Eleanor Blackwood, Daniel Cross, Dr Samuel Reed and Maya Bennett. You may question anyone and search anything."
+    },
+    "openingState": {
+      "time": "22:50",
+      "positions": {
+        "eleanor": "C2",
+        "daniel": "C3",
+        "samuel": "C4",
+        "maya": "C5",
+        "hale": "STN",
+        "vale": "CAR-B",
+        "pryor": "CAR-B",
+        "lamont": "DIN"
+      },
+      "notes": [
+        "The four suspects have been told to stay in their own compartments.",
+        "Hale watches the corridor from the station.",
+        "C1 is shut and untouched apart from Dr Vale's examination."
+      ]
+    }
+  },
+  "solution": {
+    "victimId": "arthur",
+    "culpritId": "daniel",
+    "motive": "Arthur discovered Daniel's embezzlement and planned to hand the records to his solicitor the next morning.",
+    "method": "Daniel poured a fictional fast-acting poison into Arthur's brandy flask during a visit at 21:41-21:44.",
+    "opportunity": "Arthur drank safely from the flask at about 21:39. From then until the fatal drink, Hale watched C1's door continuously, and the only person who entered was Daniel.",
+    "motiveFactIds": ["f_daniel_embezzlement", "f_arthur_solicitor_plan"],
+    "methodFactIds": ["f_daniel_poisoned_flask"],
+    "opportunityFactIds": [
+      "f_safe_drink",
+      "f_daniel_entered_c1_941",
+      "f_daniel_left_c1_944",
+      "f_arthur_distress_1014"
+    ],
+    "accusation": {
+      "required": {
+        "culpritId": "daniel",
+        "motive": "Preventing exposure of his embezzlement (E4)",
+        "method": "Poisoning the brandy flask",
+        "opportunity": "The 21:41-21:44 visit, after the safe drink (E3 and/or E7)",
+        "evidenceIds": ["E3", "E8"]
+      },
+      "partialSolve": "An accusation naming Daniel but missing the motive, the method or the opportunity is a partial solve. The game shows what was missing and does not count it as a full win.",
+      "fullWinRequiresEvidenceIds": ["E8"],
+      "withoutE8": "Naming Daniel with the right motive and opportunity but without E8 is a partial solve. Ending text: \"You have the right man, but the case would not stand up in court.\""
+    },
+    "witnessClearance": {
+      "hale": {
+        "accusable": false,
+        "clearedBy": [
+          "No motive: 14 years with the railway; had never met Arthur before tonight; nothing in the evidence connects them.",
+          "His round is corroborated: Eleanor (21:52) and Samuel (21:56) saw him in the corridor with linen; Maya saw him at the station at 21:43 and 21:47; Daniel passed him at 21:48.",
+          "Arthur was awake and present for Hale's whole 21:37-21:40 visit, and was well at 22:05.",
+          "No link to the poison: the vial (E8) is in Daniel's suitcase and its wax matches the flask cap (E2)."
+        ],
+        "factIds": [
+          "f_hale_no_motive",
+          "f_eleanor_linen_952",
+          "f_samuel_linen_956",
+          "f_maya_saw_hale",
+          "f_daniel_to_din_948",
+          "f_arthur_well_1005",
+          "f_vial",
+          "f_wax_match"
+        ]
+      }
+    }
+  },
+  "locations": [
+    {
+      "id": "C1",
+      "name": "Arthur's compartment",
+      "occupantId": "arthur",
+      "notes": "Desk, leather document case, brandy flask, glass, service bell. Closest to the station, about three paces away; faces C2"
+    },
+    {
+      "id": "C2",
+      "name": "Eleanor's compartment",
+      "occupantId": "eleanor",
+      "notes": "Directly opposite C1, closest to the station"
+    },
+    {
+      "id": "C3",
+      "name": "Daniel's compartment",
+      "occupantId": "daniel",
+      "notes": "Rear end of the corridor, facing C5; his suitcase is here. The window latch is stiff and will not open"
+    },
+    {
+      "id": "C4",
+      "name": "Samuel's compartment",
+      "occupantId": "samuel",
+      "notes": "Middle of the corridor; his medical bag is here"
+    },
+    {
+      "id": "C5",
+      "name": "Maya's compartment",
+      "occupantId": "maya",
+      "notes": "Rear end of the corridor, facing C3"
+    },
+    {
+      "id": "COR",
+      "name": "Corridor",
+      "occupantId": null,
+      "notes": "One straight corridor serving C1-C5"
+    },
+    {
+      "id": "STN",
+      "name": "Attendant's station",
+      "occupantId": "hale",
+      "notes": "At the dining-car end of the corridor; holds the service log, bell panel and pantry tray"
+    },
+    {
+      "id": "DIN",
+      "name": "Dining car",
+      "occupantId": null,
+      "notes": "Beyond the attendant's station; staff and passengers corroborate presence"
+    },
+    {
+      "id": "CAR-B",
+      "name": "Carriage B",
+      "occupantId": "pryor",
+      "notes": "A different carriage; where the attendant is called away at 22:14"
+    }
+  ],
+  "physicalRules": [
+    "Sightline: the corridor is straight. From the attendant's station every compartment door (C1-C5) is in view. Anyone walking between the dining car and the compartments must pass the station.",
+    "Doors: each compartment door has a spring latch. Closing the door latches it automatically. It opens normally from the corridor with the handle. It is not an inside-only lock.",
+    "Window: Arthur's window is shut and undamaged. There are no forced-entry marks anywhere.",
+    "No one boards or leaves the train during the evening. The train does not stop.",
+    "Search authority: the detective may search any compartment, bag or document without consent. Suspects may object in dialogue but cannot block a search.",
+    "Latches: every spring latch gives a loud metallic click when a door opens or closes. Hale's ear is trained to it."
+  ],
+  "characters": [
+    {
+      "id": "arthur",
+      "name": "Arthur Blackwood",
+      "age": 52,
+      "type": "victim",
+      "accusable": false,
+      "role": "Owner of Blackwood Maritime, a shipping and freight company",
+      "summary": "Discovered Daniel's embezzlement and Eleanor's solicitor (he found her solicitor's letter in her luggage that afternoon and kept it). Planned to hand records to his solicitor, Mr Ross, in Edinburgh the next morning, report Samuel to the medical authorities, and pursue libel against Maya's newspaper.",
+      "reasonForTravel": "Going to Edinburgh for a Blackwood Maritime board meeting and to see his solicitor, Mr Ross, the next morning."
+    },
+    {
+      "id": "eleanor",
+      "name": "Eleanor Blackwood",
+      "age": 46,
+      "type": "suspect",
+      "accusable": true,
+      "isCulprit": false,
+      "role": "Arthur's wife",
+      "persona": {
+        "personality": ["composed", "observant", "proud"],
+        "speech": "Polite, controlled, occasionally cutting"
+      },
+      "motive": "During dinner Arthur privately told her he knew about her solicitor and threatened to cut her out of his will.",
+      "secret": "She planned to leave Arthur and had already contacted a solicitor. During her 21:20-21:27 visit to C1 she took a personal letter about the marriage settlement from Arthur's desk. At about 22:14 she heard a cry and a heavy thud from C1, assumed he was in a temper after their argument, and chose not to go. She is ashamed of this.",
+      "whyTheyLie": "Ashamed and afraid her plans make her look like the obvious suspect.",
+      "initialStatement": "We argued at dinner. I did go to his compartment, but only to talk. Then I stayed in mine.",
+      "behaviour": [
+        "On the marriage: careful and guarded.",
+        "On the solicitor: denies it at first; admits it if shown the letter (E5).",
+        "If shown the letter (E5): admits taking it and explains why.",
+        "Never invents a new alibi. She stays in C2 in every version of her story.",
+        "On what she heard after 22:00: hides the cry and thud at first. Admits it if shown the bell log entry \"rang repeatedly\" (E3), or if asked directly whether she heard anything from C1 after 22:00 on the second asking or when pressed. Once she admits it she is visibly shaken and more forthcoming."
+      ],
+      "mustNotKnow": ["Daniel's 21:41 visit", "the fraud", "the cause of death"],
+      "relationships": {
+        "daniel": "Polite; thinks he flatters Arthur",
+        "samuel": "Trusts him; old family friend",
+        "maya": "Contempt: \"that newspaper woman\""
+      },
+      "reasonForTravel": "Travels as his wife, as she always does."
+    },
+    {
+      "id": "daniel",
+      "name": "Daniel Cross",
+      "age": 49,
+      "type": "suspect",
+      "accusable": true,
+      "isCulprit": true,
+      "role": "Arthur's business partner",
+      "persona": {
+        "personality": ["charming", "pragmatic", "confident"],
+        "speech": "Smooth, reasonable, slightly condescending"
+      },
+      "motive": "He has embezzled from Blackwood Maritime for years. If the records reach Arthur's solicitor he faces ruin and prison.",
+      "secret": "He returned to C1 at 21:41-21:44 and poisoned the brandy flask, then hid the empty vial in his suitcase.",
+      "whyTheyLie": "He is the murderer.",
+      "initialStatement": "I spoke with Arthur about the accounts around nine. After that I was in the dining car, apart from a quick trip to my compartment. I didn't go back to Arthur's.",
+      "behaviour": [
+        "Admits the first conversation and the trip to C3, because he knows the attendant saw him pass.",
+        "The lie: that he did not go back to C1.",
+        "Believes nobody saw him enter C1, because a moment earlier the attendant had his back to him while walking away.",
+        "Never confesses just because he is accused. The player must make the final accusation.",
+        "If asked what the \"one last discrepancy\" was (once the visit is admitted): a double-billed Leith dock-fee invoice; \"a clerk's error, I wanted Arthur to see the correction before the board.\"",
+        "Heard a woman's voice in C1 at about 21:31 and guessed it was Maya; uses this to deflect suspicion onto her."
+      ],
+      "escalationLadder": [
+        {
+          "level": 1,
+          "trigger": "default",
+          "behaviour": "Cooperative. Steers attention towards Arthur's heart condition, Eleanor's marriage and Maya's investigation."
+        },
+        {
+          "level": 2,
+          "trigger": "asked about the accounts",
+          "behaviour": "Calls them \"administrative errors.\""
+        },
+        {
+          "level": 3,
+          "trigger": "asked whether he returned to C1",
+          "behaviour": "Denies it."
+        },
+        {
+          "level": 4,
+          "trigger": "shown Hale's account (E3) or Maya's notebook (E7)",
+          "behaviour": "Admits a \"brief\" visit about business and says he left at once."
+        },
+        {
+          "level": 5,
+          "trigger": "shown the flask, the wax fragment or the vial (E2, E8)",
+          "behaviour": "Denies touching the flask and disputes what the evidence means (\"vials like that are sold everywhere\")."
+        },
+        {
+          "level": 6,
+          "trigger": "shown the vial AND the wax match AND the motive AND the timeline together (E8 + E2 + E4 + E3)",
+          "behaviour": "His explanations stop holding up. He may stop answering or ask for a solicitor."
+        },
+        {
+          "level": 7,
+          "trigger": "accused",
+          "behaviour": "Never confesses on accusation alone."
+        }
+      ],
+      "mustNotKnow": [
+        "that Hale saw him enter C1",
+        "that Maya saw him leave C1",
+        "what is in Maya's notebook",
+        "what other suspects have told the detective"
+      ],
+      "relationships": {
+        "eleanor": "Courteous; privately thinks she is unhappy and useful as a suspect",
+        "samuel": "Cordial, distant",
+        "maya": "Wary; knows she is digging into the company"
+      },
+      "reasonForTravel": "Attending the board meeting. Arthur's partner for 11 years."
+    },
+    {
+      "id": "samuel",
+      "name": "Dr Samuel Reed",
+      "age": 54,
+      "type": "suspect",
+      "accusable": true,
+      "isCulprit": false,
+      "role": "Physician; long-standing family acquaintance",
+      "persona": {
+        "personality": ["methodical", "reserved", "irritated by careless reasoning"],
+        "speech": "Precise and factual"
+      },
+      "motive": "In the spring he prescribed Arthur a medicine that reacted badly with another Arthur was taking. Arthur fell seriously ill, worked out the cause in September, and on 2 October wrote that he would report Samuel to the General Medical Council after the journey. Samuel stands to lose his licence.",
+      "secret": "The prescribing error and Arthur's threatening letter. He accepted Arthur's invitation on the trip hoping to talk him out of reporting him.",
+      "whyTheyLie": "He knows they look like a motive.",
+      "initialStatement": "I examined Arthur at about ten past nine. He was alive and in no danger. Then I worked in my compartment.",
+      "behaviour": [
+        "On Arthur's health: answers directly, and explains why a heart death might look plausible at first.",
+        "On the prescribing error: withholds it until shown Arthur's letter (E6), then admits it plainly.",
+        "On poisoning: says only a proper examination can decide. Won't endorse the detective's theory without evidence.",
+        "Never invents medical findings.",
+        "Did not examine the body; Dr Vale did.",
+        "At 22:35 he offered to examine Arthur and Hale refused; he is still offended by it."
+      ],
+      "mustNotKnow": ["the fraud", "events in C1 after 21:16", "the cause of death"],
+      "relationships": {
+        "eleanor": "Fond of her, protective",
+        "daniel": "Finds him slippery",
+        "maya": "Indifferent; dislikes the press"
+      },
+      "reasonForTravel": "Arthur invited him personally, saying they would \"discuss the matter of my letter on the way.\" Samuel came hoping to talk Arthur out of reporting him."
+    },
+    {
+      "id": "maya",
+      "name": "Maya Bennett",
+      "age": 32,
+      "type": "suspect",
+      "accusable": true,
+      "isCulprit": false,
+      "role": "Journalist",
+      "persona": {
+        "personality": ["intelligent", "persistent", "sceptical"],
+        "speech": "Direct, observant, sometimes sarcastic"
+      },
+      "motive": "Arthur's solicitors had threatened her newspaper with a libel action that could end her career. She also wanted his papers for her story.",
+      "secret": "She holds a confidential document from a source inside Blackwood Maritime suggesting a senior executive was behind fraudulent payments. She has promised never to reveal the source.",
+      "whyTheyLie": "Protecting her source.",
+      "initialStatement": "I asked Arthur about his company and he threw me out. I had nothing to do with his death.",
+      "behaviour": [
+        "On her investigation: protects her source and gives as little as possible.",
+        "If shown the confidential document (E7): admits having it and refuses to name the source.",
+        "If asked specifically about the corridor or about Daniel's movements: tells what she saw at 21:44, and separates what she saw from what she suspects.",
+        "If accused because she was in the corridor: explains the notebook trip and points out the attendant saw her."
+      ],
+      "mustNotKnow": [
+        "what happened inside C1",
+        "the cause of death",
+        "the details of the embezzlement"
+      ],
+      "relationships": {
+        "eleanor": "Curious about her",
+        "daniel": "Her prime suspect for the fraud (she never says why)",
+        "samuel": "Thinks he is hiding something"
+      },
+      "reasonForTravel": "Not in Arthur's party. She booked C5 on purpose to corner him, and at coffee sat down at his table uninvited."
+    },
+    {
+      "id": "hale",
+      "name": "Thomas Hale",
+      "age": 41,
+      "type": "witness",
+      "accusable": false,
+      "role": "Train attendant",
+      "persona": {
+        "personality": ["discreet", "precise", "proud of his service record"],
+        "speech": "Formal, brief"
+      },
+      "behaviour": [
+        "Does not volunteer passengers' movements.",
+        "Answers truthfully and precisely when asked about a specific time, person or place.",
+        "If asked \"Did anyone go into Mr Blackwood's compartment after you left?\", he answers fully.",
+        "Has worked for the railway for 14 years and had never met Arthur before tonight.",
+        "If asked about walking back from C1 at 21:40: his back was to the corridor for perhaps two seconds; no door clicked behind him; the first click he heard was C3's, which is why he looked up."
+      ],
+      "mustNotKnow": ["what happened inside C1 during Daniel's visit", "anyone's motives"]
+    },
+    {
+      "id": "vale",
+      "name": "Dr Margaret Vale",
+      "age": 60,
+      "type": "witness",
+      "accusable": false,
+      "role": "Independent physician travelling in carriage B",
+      "persona": {
+        "personality": ["careful"],
+        "speech": "Careful, plain"
+      },
+      "behaviour": [
+        "Asked to examine Arthur at 22:40.",
+        "Cannot identify the substance on a moving train.",
+        "Does not name a culprit."
+      ],
+      "mustNotKnow": ["the identity of the poison", "the culprit"]
+    },
+    {
+      "id": "pryor",
+      "name": "Mrs Agnes Pryor",
+      "age": 72,
+      "type": "witness",
+      "accusable": false,
+      "role": "Passenger in carriage B",
+      "persona": {
+        "personality": [],
+        "speech": null
+      },
+      "behaviour": [
+        "Knows nothing about Arthur or the suspects.",
+        "Speaks for both herself and Mr Pryor. Mr Pryor is a background character and cannot be questioned."
+      ],
+      "mustNotKnow": ["everything about the Blackwood party"]
+    },
+    {
+      "id": "lamont",
+      "name": "Fergus Lamont",
+      "age": null,
+      "type": "witness",
+      "accusable": false,
+      "role": "Dining-car steward",
+      "persona": {
+        "personality": ["formal", "observant", "slow to gossip"],
+        "speech": "Formal"
+      },
+      "behaviour": [
+        "Confirms who was in the dining car and when.",
+        "Knows nothing about what happened in the corridor."
+      ],
+      "mustNotKnow": [
+        "anything that happened in the corridor or the compartments",
+        "anyone's motives"
+      ]
+    }
+  ],
+  "events": [
+    {
+      "id": "ev_dinner_threat",
+      "time": {
+        "start": "20:15",
+        "approx": true
+      },
+      "locationId": "DIN",
+      "participants": ["arthur", "eleanor"],
+      "description": "During dinner, Arthur privately tells Eleanor he knows about her solicitor and threatens to disinherit her.",
+      "corroboration": ["eleanor", "nearby diners noticed tension"]
+    },
+    {
+      "id": "ev_dinner_ends",
+      "time": {
+        "start": "20:30"
+      },
+      "locationId": "DIN",
+      "participants": ["arthur", "eleanor", "daniel", "samuel", "maya"],
+      "description": "Dinner ends.",
+      "corroboration": ["staff", "passengers"]
+    },
+    {
+      "id": "ev_hale_coffee",
+      "time": {
+        "start": "20:30",
+        "end": "20:48"
+      },
+      "locationId": "DIN",
+      "participants": ["hale"],
+      "description": "Hale serves coffee in the dining car.",
+      "corroboration": ["lamont"]
+    },
+    {
+      "id": "ev_maya_din_0",
+      "time": {
+        "start": "20:30",
+        "end": "21:31"
+      },
+      "locationId": "DIN",
+      "participants": ["maya"],
+      "description": "Maya is in the dining car, writing.",
+      "corroboration": ["lamont"]
+    },
+    {
+      "id": "ev_coffee_threat",
+      "time": {
+        "start": "20:45"
+      },
+      "locationId": "DIN",
+      "participants": ["arthur", "eleanor", "daniel", "samuel", "maya"],
+      "description": "Over coffee, Arthur says that by morning one of the four \"will wish you had never met me.\"",
+      "corroboration": ["eleanor", "daniel", "samuel", "maya"]
+    },
+    {
+      "id": "ev_hale_station_0",
+      "time": {
+        "start": "20:48",
+        "end": "21:37"
+      },
+      "locationId": "STN",
+      "participants": ["hale"],
+      "description": "Hale is at the station, facing the corridor.",
+      "corroboration": ["hale"]
+    },
+    {
+      "id": "ev_party_retires",
+      "time": {
+        "start": "20:50"
+      },
+      "locationId": "COR",
+      "movement": {
+        "from": "DIN",
+        "to": "COR"
+      },
+      "participants": ["arthur", "eleanor", "samuel"],
+      "witnesses": ["hale"],
+      "description": "Arthur, Eleanor and Samuel pass the station to C1, C2 and C4.",
+      "corroboration": ["hale"]
+    },
+    {
+      "id": "ev_daniel_remark",
+      "time": {
+        "start": "20:50",
+        "approx": true
+      },
+      "locationId": "DIN",
+      "participants": ["daniel", "maya"],
+      "witnesses": ["lamont"],
+      "description": "Daniel tells Maya, \"If you'll excuse me, I must see Arthur about the accounts.\"",
+      "corroboration": ["lamont", "maya"]
+    },
+    {
+      "id": "ev_eleanor_c2_early",
+      "time": {
+        "start": "20:50",
+        "end": "21:20"
+      },
+      "locationId": "C2",
+      "participants": ["eleanor"],
+      "description": "Eleanor is alone in C2 (unverified; nothing depends on it).",
+      "corroboration": []
+    },
+    {
+      "id": "ev_samuel_c4_early",
+      "time": {
+        "start": "20:50",
+        "end": "21:08"
+      },
+      "locationId": "C4",
+      "participants": ["samuel"],
+      "description": "Samuel is in C4, writing notes.",
+      "corroboration": []
+    },
+    {
+      "id": "ev_daniel_visit_1",
+      "time": {
+        "start": "20:55",
+        "end": "21:05"
+      },
+      "locationId": "C1",
+      "participants": ["daniel", "arthur"],
+      "description": "Daniel's first conversation with Arthur about discrepancies in the accounts. Arthur says they will settle it in the morning. Hale sees him go in at 20:55 and pass back to the dining car at 21:05.",
+      "corroboration": ["daniel"],
+      "witnesses": ["hale"]
+    },
+    {
+      "id": "ev_case_locked",
+      "time": {
+        "start": "21:05"
+      },
+      "locationId": "C1",
+      "participants": ["arthur"],
+      "description": "Arthur locks the records, the solicitor's envelope and the note in his document case; the key goes in his waistcoat pocket.",
+      "corroboration": ["E4"]
+    },
+    {
+      "id": "ev_daniel_din_1",
+      "time": {
+        "start": "21:05",
+        "end": "21:30"
+      },
+      "locationId": "DIN",
+      "participants": ["daniel"],
+      "description": "Daniel is in the dining car.",
+      "corroboration": []
+    },
+    {
+      "id": "ev_arthur_fetches_samuel",
+      "time": {
+        "start": "21:08"
+      },
+      "locationId": "COR",
+      "movement": {
+        "from": "C1",
+        "to": "C4"
+      },
+      "participants": ["arthur", "samuel"],
+      "witnesses": ["hale"],
+      "description": "Arthur steps out of C1 and knocks at C4, asking Samuel to look at him, then returns to C1.",
+      "corroboration": ["hale", "samuel"]
+    },
+    {
+      "id": "ev_samuel_exam",
+      "time": {
+        "start": "21:10",
+        "end": "21:16"
+      },
+      "locationId": "C1",
+      "participants": ["samuel", "arthur"],
+      "description": "Samuel examines Arthur, who complains of feeling unwell. Arthur is alive, coherent, with a raised pulse consistent with anxiety. Hale sees him go into C1 with his bag at 21:10 and return to C4 at 21:16.",
+      "corroboration": ["E1"],
+      "witnesses": ["hale"]
+    },
+    {
+      "id": "ev_samuel_in_c4",
+      "time": {
+        "start": "21:16",
+        "onward": true
+      },
+      "locationId": "C4",
+      "participants": ["samuel"],
+      "description": "Samuel is in C4 for the rest of the evening, writing notes.",
+      "corroboration": ["hale (linen at 21:56)"]
+    },
+    {
+      "id": "ev_eleanor_visit",
+      "time": {
+        "start": "21:20",
+        "end": "21:27"
+      },
+      "locationId": "C1",
+      "participants": ["eleanor", "arthur"],
+      "description": "Eleanor argues with Arthur and takes the marriage-settlement letter from his desk. Hale sees her cross from C2 at 21:20 and return at 21:27, and hears raised voices, a woman's and Mr Blackwood's.",
+      "corroboration": ["E5"],
+      "witnesses": ["hale"]
+    },
+    {
+      "id": "ev_eleanor_in_c2",
+      "time": {
+        "start": "21:27",
+        "onward": true
+      },
+      "locationId": "C2",
+      "participants": ["eleanor"],
+      "description": "Eleanor is in C2 for the rest of the evening.",
+      "corroboration": ["hale (linen at 21:52)"]
+    },
+    {
+      "id": "ev_daniel_to_c3",
+      "time": {
+        "start": "21:30"
+      },
+      "locationId": "COR",
+      "movement": {
+        "from": "DIN",
+        "to": "C3"
+      },
+      "participants": ["daniel"],
+      "description": "Daniel walks past the attendant's station to C3 to collect the poison vial from his suitcase.",
+      "corroboration": ["hale"],
+      "witnesses": ["hale"]
+    },
+    {
+      "id": "ev_daniel_waits_c3",
+      "time": {
+        "start": "21:30",
+        "end": "21:41"
+      },
+      "locationId": "C3",
+      "participants": ["daniel"],
+      "description": "Daniel waits in C3 until the attendant leaves C1. He hears a woman's voice in C1 at about 21:31 and guesses it is Maya.",
+      "corroboration": []
+    },
+    {
+      "id": "ev_maya_visit",
+      "time": {
+        "start": "21:31",
+        "end": "21:34"
+      },
+      "locationId": "C1",
+      "participants": ["maya", "arthur"],
+      "description": "Maya asks Arthur who is behind the irregularities. He refuses and orders her out. On the way in at 21:31 she sees Daniel's back as he goes into C3. Hale sees her pass at 21:31 and come back past him at 21:34, \"looking furious.\"",
+      "corroboration": ["maya", "hale"],
+      "witnesses": ["hale"]
+    },
+    {
+      "id": "ev_maya_din_1",
+      "time": {
+        "start": "21:34",
+        "end": "21:43"
+      },
+      "locationId": "DIN",
+      "participants": ["maya"],
+      "description": "Maya is in the dining car and realises she left her notebook in C5.",
+      "corroboration": ["dining-car staff", "lamont"]
+    },
+    {
+      "id": "ev_bell_1",
+      "time": {
+        "start": "21:36"
+      },
+      "locationId": "C1",
+      "participants": ["arthur"],
+      "description": "Arthur rings for water (logged).",
+      "corroboration": ["E3"]
+    },
+    {
+      "id": "ev_hale_water",
+      "time": {
+        "start": "21:37",
+        "end": "21:40"
+      },
+      "locationId": "C1",
+      "participants": ["hale", "arthur"],
+      "description": "Hale is in C1 bringing water.",
+      "corroboration": ["hale", "E3"]
+    },
+    {
+      "id": "ev_safe_drink",
+      "time": {
+        "start": "21:39",
+        "approx": true
+      },
+      "locationId": "C1",
+      "participants": ["arthur", "hale"],
+      "description": "Arthur pours a measure of brandy from his flask into his glass and drinks it (the safe drink). Hale takes the used glass away on his tray and leaves a clean glass upturned on the desk.",
+      "corroboration": ["hale", "E3 (used glass on tray)"]
+    },
+    {
+      "id": "ev_hale_station_1",
+      "time": {
+        "start": "21:40",
+        "end": "21:44"
+      },
+      "locationId": "STN",
+      "participants": ["hale"],
+      "description": "Hale leaves C1 at 21:40 and walks three paces back to the station, his back to the corridor for perhaps two seconds; no door clicks behind him. He then sorts linen, facing the corridor.",
+      "corroboration": ["hale"]
+    },
+    {
+      "id": "ev_daniel_enters_c1",
+      "time": {
+        "start": "21:41"
+      },
+      "locationId": "COR",
+      "movement": {
+        "from": "C3",
+        "to": "C1"
+      },
+      "participants": ["daniel"],
+      "witnesses": ["hale"],
+      "description": "Daniel steps out of C3, walks up the corridor and goes into C1 on the pretext of \"one last discrepancy.\" Hale, setting his tray down at the station, hears C3's latch click, glances up and sees him go in.",
+      "corroboration": ["hale"]
+    },
+    {
+      "id": "ev_poisoning",
+      "time": {
+        "start": "21:41",
+        "end": "21:44"
+      },
+      "locationId": "C1",
+      "participants": ["daniel", "arthur"],
+      "description": "While Arthur is turned towards his document case, Daniel breaks the vial's wax seal and pours the poison into the flask. A fragment of the wax catches in the flask cap's thread.",
+      "corroboration": ["E2 (wax fragment)", "E8 (vial)"]
+    },
+    {
+      "id": "ev_maya_to_c5",
+      "time": {
+        "start": "21:43"
+      },
+      "locationId": "COR",
+      "movement": {
+        "from": "DIN",
+        "to": "C5"
+      },
+      "participants": ["maya"],
+      "witnesses": ["hale"],
+      "description": "Maya walks past the attendant's station into the corridor to fetch her notebook from C5. She goes into C5 and pushes the door to without latching it, because she means to be quick.",
+      "corroboration": ["hale"]
+    },
+    {
+      "id": "ev_daniel_leaves_c1",
+      "time": {
+        "start": "21:44"
+      },
+      "locationId": "COR",
+      "movement": {
+        "from": "C1",
+        "to": "C3"
+      },
+      "participants": ["daniel"],
+      "witnesses": ["hale", "maya"],
+      "description": "Daniel leaves C1 and walks down to C3. Hale sees him; Maya watches him through the gap of her unlatched C5 door. Daniel sees only a door ajar, not her.",
+      "corroboration": ["hale", "maya", "E7"]
+    },
+    {
+      "id": "ev_maya_in_c5",
+      "time": {
+        "start": "21:44",
+        "end": "21:47"
+      },
+      "locationId": "C5",
+      "participants": ["maya"],
+      "description": "Maya is in C5 collecting her notebook.",
+      "corroboration": ["hale saw her go in and come out"]
+    },
+    {
+      "id": "ev_daniel_hides_vial",
+      "time": {
+        "start": "21:44",
+        "end": "21:48"
+      },
+      "locationId": "C3",
+      "participants": ["daniel"],
+      "description": "Daniel puts the empty vial back in his suitcase, wrapped in a handkerchief inside a shoe. C3's window latch is stiff and Hale is in the corridor, so he cannot get rid of it; carrying it seems riskier, and he plans to drop it in Edinburgh.",
+      "corroboration": ["E8"]
+    },
+    {
+      "id": "ev_hale_round",
+      "time": {
+        "start": "21:44",
+        "end": "22:05"
+      },
+      "locationId": "COR",
+      "participants": ["hale"],
+      "description": "Hale's corridor round: trimming lamps, drawing corridor blinds, handing linen to passengers at their doors. He stays in the corridor throughout and enters no compartment.",
+      "corroboration": ["E3 (service log)"]
+    },
+    {
+      "id": "ev_maya_to_din",
+      "time": {
+        "start": "21:47"
+      },
+      "locationId": "COR",
+      "movement": {
+        "from": "C5",
+        "to": "DIN"
+      },
+      "participants": ["maya"],
+      "witnesses": ["hale"],
+      "description": "Maya walks back past Hale to the dining car. She does not go near C1.",
+      "corroboration": ["hale"]
+    },
+    {
+      "id": "ev_maya_din_2",
+      "time": {
+        "start": "21:47",
+        "end": "22:45"
+      },
+      "locationId": "DIN",
+      "participants": ["maya"],
+      "description": "Maya is in the dining car.",
+      "corroboration": ["lamont"]
+    },
+    {
+      "id": "ev_daniel_to_din",
+      "time": {
+        "start": "21:48"
+      },
+      "locationId": "COR",
+      "movement": {
+        "from": "C3",
+        "to": "DIN"
+      },
+      "participants": ["daniel"],
+      "witnesses": ["hale"],
+      "description": "Daniel walks past Hale to the dining car.",
+      "corroboration": ["hale"]
+    },
+    {
+      "id": "ev_daniel_din_2",
+      "time": {
+        "start": "21:49",
+        "end": "22:45"
+      },
+      "locationId": "DIN",
+      "participants": ["daniel"],
+      "description": "Daniel is in the dining car; witnesses confirm he is there at 22:00.",
+      "corroboration": ["dining-car witnesses", "lamont"]
+    },
+    {
+      "id": "ev_maya_note",
+      "time": {
+        "start": "21:50"
+      },
+      "locationId": "DIN",
+      "participants": ["maya"],
+      "description": "In the dining car, Maya writes: \"9.44 — D.C. came out of A.B.'s compartment, straight into his own. Second visit tonight? Ask.\"",
+      "corroboration": ["E7"]
+    },
+    {
+      "id": "ev_daniel_whisky",
+      "time": {
+        "start": "21:50",
+        "approx": true
+      },
+      "locationId": "DIN",
+      "participants": ["daniel"],
+      "witnesses": ["lamont"],
+      "description": "Daniel orders a whisky and seems \"in very good spirits.\"",
+      "corroboration": ["lamont"]
+    },
+    {
+      "id": "ev_linen_eleanor",
+      "time": {
+        "start": "21:52"
+      },
+      "locationId": "C2",
+      "participants": ["hale", "eleanor"],
+      "description": "Hale hands Eleanor fresh linen at C2's door.",
+      "corroboration": ["hale", "E3"]
+    },
+    {
+      "id": "ev_linen_samuel",
+      "time": {
+        "start": "21:56"
+      },
+      "locationId": "C4",
+      "participants": ["hale", "samuel"],
+      "description": "Hale hands Samuel fresh linen at C4's door.",
+      "corroboration": ["hale", "E3"]
+    },
+    {
+      "id": "ev_linen_bags",
+      "time": {
+        "start": "21:58"
+      },
+      "locationId": "COR",
+      "participants": ["hale"],
+      "description": "Hale hangs linen bags on the door hooks of C3 and C5, both empty.",
+      "corroboration": ["E3"]
+    },
+    {
+      "id": "ev_arthur_goodnight",
+      "time": {
+        "start": "22:05"
+      },
+      "locationId": "C1",
+      "participants": ["hale", "arthur"],
+      "description": "Hale knocks at C1. Arthur opens the door, declines turndown and says goodnight. He looks well. Hale sees the flask capped on the desk and the clean glass still upturned. Arthur closes the door and it latches.",
+      "corroboration": ["hale", "E3"]
+    },
+    {
+      "id": "ev_station_watch",
+      "time": {
+        "start": "22:05",
+        "end": "22:13"
+      },
+      "locationId": "STN",
+      "participants": ["hale"],
+      "description": "Hale is at the station facing the corridor. No one enters the corridor or opens a door.",
+      "corroboration": ["hale"]
+    },
+    {
+      "id": "ev_fatal_drink",
+      "time": {
+        "start": "22:10",
+        "approx": true
+      },
+      "engineOnly": true,
+      "playerBound": {
+        "start": "22:05",
+        "end": "22:14"
+      },
+      "locationId": "C1",
+      "participants": ["arthur"],
+      "description": "Arthur drinks from the poisoned flask (the fatal drink). The player can only bound it to 22:05-22:14.",
+      "corroboration": ["E2 (upright glass with residue)", "E3 (bell at 22:14)", "vale (onset)"]
+    },
+    {
+      "id": "ev_pryor_arrives",
+      "time": {
+        "start": "22:13"
+      },
+      "locationId": "STN",
+      "participants": ["pryor", "hale"],
+      "description": "Mrs Pryor arrives at the station, distressed: her husband is trapped in their compartment in carriage B by a jammed door.",
+      "corroboration": ["pryor", "hale"]
+    },
+    {
+      "id": "ev_bell_2",
+      "time": {
+        "start": "22:14"
+      },
+      "locationId": "C1",
+      "participants": ["arthur"],
+      "description": "Arthur's bell rings repeatedly (logged) while Hale is with Mrs Pryor. Hale judges a trapped elderly man more urgent and goes to carriage B, intending to come straight back.",
+      "corroboration": ["E3", "pryor"]
+    },
+    {
+      "id": "ev_hale_car_b",
+      "time": {
+        "start": "22:14",
+        "end": "22:33"
+      },
+      "locationId": "CAR-B",
+      "participants": ["hale", "pryor", "vale"],
+      "description": "Hale frees Mr Pryor from the jammed compartment in carriage B. Dr Vale, travelling in carriage B, comes out during the commotion.",
+      "corroboration": ["pryor"]
+    },
+    {
+      "id": "ev_arthur_distress",
+      "time": {
+        "start": "22:14"
+      },
+      "locationId": "C1",
+      "participants": ["arthur"],
+      "witnesses": ["eleanor", "pryor"],
+      "description": "Arthur, already ill, rings the bell repeatedly, cries out and collapses beside the bell push. Eleanor hears a cry and a heavy thud from across the corridor; Mrs Pryor sees the C1 indicator buzzing again and again.",
+      "corroboration": ["E3 (rang repeatedly)", "pryor", "eleanor"]
+    },
+    {
+      "id": "ev_death",
+      "time": {
+        "start": "22:15",
+        "end": "22:25"
+      },
+      "locationId": "C1",
+      "participants": ["arthur"],
+      "description": "Arthur dies.",
+      "corroboration": ["vale (estimate)"]
+    },
+    {
+      "id": "ev_discovery",
+      "time": {
+        "start": "22:35"
+      },
+      "locationId": "C1",
+      "participants": ["hale"],
+      "description": "Hale reaches C1, gets no answer, opens the latched door and finds Arthur dead on the floor beside the bell push. The glass is upright on the desk.",
+      "corroboration": ["hale"]
+    },
+    {
+      "id": "ev_after_discovery",
+      "time": {
+        "start": "22:35",
+        "end": "22:40"
+      },
+      "locationId": "COR",
+      "participants": ["hale", "eleanor", "samuel"],
+      "description": "Hale keeps C1 shut and sends for Dr Vale. Eleanor opens her door at his call. Samuel comes to his door and offers to examine Arthur; Hale refuses, because railway rules say a doctor outside the party must be called and he has just met Dr Vale during the carriage B incident.",
+      "corroboration": ["hale", "eleanor", "samuel"]
+    },
+    {
+      "id": "ev_vale_exam",
+      "time": {
+        "start": "22:40"
+      },
+      "locationId": "C1",
+      "participants": ["vale"],
+      "description": "Dr Vale examines Arthur.",
+      "corroboration": ["vale"]
+    },
+    {
+      "id": "ev_suspects_confined",
+      "time": {
+        "start": "22:45",
+        "end": "22:50"
+      },
+      "locationId": "COR",
+      "participants": ["eleanor", "daniel", "samuel", "maya"],
+      "description": "The four suspects are told to return to their own compartments and stay there.",
+      "corroboration": ["hale"]
+    },
+    {
+      "id": "ev_game_start",
+      "time": {
+        "start": "22:50"
+      },
+      "locationId": "STN",
+      "participants": [],
+      "description": "The detective begins the investigation.",
+      "corroboration": []
+    }
+  ],
+  "facts": [
+    {
+      "id": "f_arthur_brandy_habit",
+      "kind": "habit",
+      "statement": "Arthur drinks brandy from his personal silver flask before bed."
+    },
+    {
+      "id": "f_arthur_dislikes_disturbance",
+      "kind": "habit",
+      "statement": "Arthur dislikes being disturbed once he has closed his door for the night."
+    },
+    {
+      "id": "f_arthur_document_case",
+      "kind": "habit",
+      "statement": "Arthur keeps important papers in a locked leather document case, with the key in his waistcoat pocket."
+    },
+    {
+      "id": "f_arthur_heart_condition",
+      "kind": "medical",
+      "statement": "Arthur has a heart condition."
+    },
+    {
+      "id": "f_arthur_anxious_tomorrow",
+      "kind": "observation",
+      "statement": "Arthur had been anxious about \"tomorrow morning.\""
+    },
+    {
+      "id": "f_arthur_planned_reveal",
+      "kind": "observation",
+      "statement": "Arthur planned to reveal something."
+    },
+    {
+      "id": "f_arthur_solicitor_plan",
+      "kind": "motive",
+      "statement": "Arthur planned to hand the financial records and a sealed envelope to his solicitor, Mr Ross, in Edinburgh the next morning."
+    },
+    {
+      "id": "f_dinner_threat_eleanor",
+      "kind": "motive",
+      "eventId": "ev_dinner_threat",
+      "statement": "At about 20:15, during dinner, Arthur privately told Eleanor he knew about her solicitor and threatened to cut her out of his will."
+    },
+    {
+      "id": "f_eleanor_arthur_argued_dinner",
+      "kind": "observation",
+      "eventId": "ev_dinner_threat",
+      "statement": "Eleanor and Arthur argued at dinner."
+    },
+    {
+      "id": "f_coffee_threat",
+      "kind": "observation",
+      "eventId": "ev_coffee_threat",
+      "statement": "At 20:45 over coffee, Arthur told the four that by morning one of them \"will wish you had never met me.\""
+    },
+    {
+      "id": "f_daniel_embezzlement",
+      "kind": "motive",
+      "statement": "Daniel has embezzled from Blackwood Maritime for years by diverting company funds through invoices to shell companies."
+    },
+    {
+      "id": "f_daniel_handles_finances",
+      "kind": "observation",
+      "statement": "Daniel handles Blackwood Maritime's finances."
+    },
+    {
+      "id": "f_daniel_visit_1",
+      "kind": "movement",
+      "eventId": "ev_daniel_visit_1",
+      "statement": "Daniel spoke with Arthur in C1 from 20:55 to 21:05 about discrepancies in the accounts; Arthur said they would settle it in the morning."
+    },
+    {
+      "id": "f_daniel_din_1",
+      "kind": "movement",
+      "eventId": "ev_daniel_din_1",
+      "statement": "Daniel was in the dining car from 21:05 to 21:30."
+    },
+    {
+      "id": "f_daniel_to_c3_930",
+      "kind": "movement",
+      "eventId": "ev_daniel_to_c3",
+      "statement": "At 21:30 Daniel walked past the attendant's station to his compartment, C3."
+    },
+    {
+      "id": "f_daniel_collected_vial",
+      "kind": "secret",
+      "eventId": "ev_daniel_to_c3",
+      "statement": "Daniel went to C3 at 21:30 to collect the poison vial from his suitcase."
+    },
+    {
+      "id": "f_daniel_waited_c3",
+      "kind": "secret",
+      "eventId": "ev_daniel_waits_c3",
+      "statement": "Daniel waited in C3 from 21:30 to 21:41 until the attendant left C1."
+    },
+    {
+      "id": "f_daniel_entered_c1_941",
+      "kind": "movement",
+      "eventId": "ev_daniel_enters_c1",
+      "statement": "At 21:41 Daniel stepped out of C3, walked up the corridor and went into C1."
+    },
+    {
+      "id": "f_daniel_pretext",
+      "kind": "secret",
+      "eventId": "ev_daniel_enters_c1",
+      "statement": "Daniel's pretext for the 21:41 visit was \"one last discrepancy.\""
+    },
+    {
+      "id": "f_daniel_poisoned_flask",
+      "kind": "secret",
+      "eventId": "ev_poisoning",
+      "statement": "Between 21:41 and 21:44, while Arthur was turned towards his document case, Daniel broke the vial's wax seal and poured the poison into the brandy flask."
+    },
+    {
+      "id": "f_daniel_left_c1_944",
+      "kind": "movement",
+      "eventId": "ev_daniel_leaves_c1",
+      "statement": "At 21:44 Daniel came out of C1 and walked down the corridor into C3."
+    },
+    {
+      "id": "f_daniel_hid_vial",
+      "kind": "secret",
+      "eventId": "ev_daniel_hides_vial",
+      "statement": "Between 21:44 and 21:48 Daniel put the empty vial back in his suitcase, wrapped in a handkerchief inside a shoe. His window latch was stiff and Hale was in the corridor, so he kept it, planning to drop it in Edinburgh."
+    },
+    {
+      "id": "f_daniel_to_din_948",
+      "kind": "movement",
+      "eventId": "ev_daniel_to_din",
+      "statement": "At 21:48 Daniel walked past the attendant to the dining car."
+    },
+    {
+      "id": "f_daniel_din_2",
+      "kind": "movement",
+      "eventId": "ev_daniel_din_2",
+      "statement": "Daniel was in the dining car from 21:49 to 22:45, including at 22:00."
+    },
+    {
+      "id": "f_eleanor_solicitor",
+      "kind": "secret",
+      "statement": "Eleanor planned to leave Arthur and had already contacted a solicitor."
+    },
+    {
+      "id": "f_eleanor_visit",
+      "kind": "movement",
+      "eventId": "ev_eleanor_visit",
+      "statement": "Eleanor visited Arthur in C1 from 21:20 to 21:27 and argued with him."
+    },
+    {
+      "id": "f_eleanor_took_letter",
+      "kind": "secret",
+      "eventId": "ev_eleanor_visit",
+      "statement": "During her 21:20-21:27 visit Eleanor took back from Arthur's desk the letter from her solicitor that Arthur had taken from her luggage."
+    },
+    {
+      "id": "f_arthur_alive_927",
+      "kind": "observation",
+      "eventId": "ev_eleanor_visit",
+      "statement": "Arthur was alive and angry when Eleanor left C1 at 21:27."
+    },
+    {
+      "id": "f_eleanor_in_c2",
+      "kind": "movement",
+      "eventId": "ev_eleanor_in_c2",
+      "statement": "Eleanor was in C2 from 21:27 for the rest of the evening."
+    },
+    {
+      "id": "f_eleanor_heard_footsteps",
+      "kind": "observation",
+      "eventId": "ev_eleanor_in_c2",
+      "statement": "Eleanor heard footsteps in the corridor at various times but did not open her door to look."
+    },
+    {
+      "id": "f_eleanor_never_touched_flask",
+      "kind": "observation",
+      "statement": "Eleanor never touched the brandy flask."
+    },
+    {
+      "id": "f_samuel_family_acquaintance",
+      "kind": "observation",
+      "statement": "Samuel is travelling as a long-standing acquaintance of the Blackwood family."
+    },
+    {
+      "id": "f_samuel_error",
+      "kind": "secret",
+      "statement": "In the spring Samuel prescribed Arthur a medicine that reacted badly with another medicine Arthur was taking; Arthur fell seriously ill and recovered."
+    },
+    {
+      "id": "f_samuel_letter",
+      "kind": "secret",
+      "statement": "On 2 October 1934 Arthur wrote to Samuel saying he would report him to the General Medical Council after the journey."
+    },
+    {
+      "id": "f_samuel_exam",
+      "kind": "movement",
+      "eventId": "ev_samuel_exam",
+      "statement": "Samuel examined Arthur in C1 from 21:10 to 21:16; Arthur was alive, coherent, with a raised pulse consistent with anxiety and no acute symptoms."
+    },
+    {
+      "id": "f_samuel_in_c4",
+      "kind": "movement",
+      "eventId": "ev_samuel_in_c4",
+      "statement": "Samuel was in C4 from 21:16 for the rest of the evening, writing notes."
+    },
+    {
+      "id": "f_samuel_never_touched_flask",
+      "kind": "observation",
+      "statement": "Samuel never touched the brandy flask."
+    },
+    {
+      "id": "f_samuel_did_not_examine_body",
+      "kind": "observation",
+      "statement": "Samuel did not examine Arthur's body; Hale refused his offer and Dr Vale examined it."
+    },
+    {
+      "id": "f_maya_libel_threat",
+      "kind": "motive",
+      "statement": "Arthur's solicitors had threatened Maya's newspaper with a libel action that could end her career."
+    },
+    {
+      "id": "f_maya_source_document",
+      "kind": "secret",
+      "statement": "Maya holds a confidential document from a source inside Blackwood Maritime suggesting a senior executive was behind fraudulent payments."
+    },
+    {
+      "id": "f_maya_source_identity",
+      "kind": "secret",
+      "statement": "Maya has promised never to reveal the identity of her source."
+    },
+    {
+      "id": "f_maya_visit",
+      "kind": "movement",
+      "eventId": "ev_maya_visit",
+      "statement": "Maya visited Arthur in C1 from 21:31 to 21:34 to ask who was behind the irregularities; he refused and ordered her out."
+    },
+    {
+      "id": "f_maya_din_1",
+      "kind": "movement",
+      "eventId": "ev_maya_din_1",
+      "statement": "Maya was in the dining car from 21:34 to 21:43, where she realised she had left her notebook in C5."
+    },
+    {
+      "id": "f_maya_to_c5_943",
+      "kind": "movement",
+      "eventId": "ev_maya_to_c5",
+      "statement": "At 21:43 Maya walked past the attendant's station into the corridor and went into C5 to fetch her notebook."
+    },
+    {
+      "id": "f_maya_in_c5",
+      "kind": "movement",
+      "eventId": "ev_maya_in_c5",
+      "statement": "Maya was in C5 from 21:44 to 21:47 collecting her notebook."
+    },
+    {
+      "id": "f_maya_to_din_947",
+      "kind": "movement",
+      "eventId": "ev_maya_to_din",
+      "statement": "At 21:47 Maya walked back past the attendant to the dining car, without going near C1."
+    },
+    {
+      "id": "f_maya_note_950",
+      "kind": "observation",
+      "eventId": "ev_maya_note",
+      "statement": "At 21:50 in the dining car Maya wrote in her notebook: \"9.44 — D.C. came out of A.B.'s compartment, straight into his own. Second visit tonight? Ask.\""
+    },
+    {
+      "id": "f_maya_never_touched_flask",
+      "kind": "observation",
+      "statement": "Maya never touched the brandy flask."
+    },
+    {
+      "id": "f_bell_936",
+      "kind": "observation",
+      "eventId": "ev_bell_1",
+      "statement": "Arthur's bell rang at 21:36 (logged)."
+    },
+    {
+      "id": "f_hale_water_visit",
+      "kind": "movement",
+      "eventId": "ev_hale_water",
+      "statement": "Hale was in C1 from 21:37 to 21:40 bringing water."
+    },
+    {
+      "id": "f_safe_drink",
+      "kind": "observation",
+      "eventId": "ev_safe_drink",
+      "statement": "At about 21:39, in front of Hale, Arthur poured brandy from his flask into his glass and drank it. Hale took the used glass away on his tray and left a clean glass upturned on the desk."
+    },
+    {
+      "id": "f_hale_at_station_940",
+      "kind": "movement",
+      "eventId": "ev_hale_station_1",
+      "statement": "From 21:40 to 21:44 Hale was at the station, sorting linen and facing the corridor."
+    },
+    {
+      "id": "f_hale_round",
+      "kind": "movement",
+      "eventId": "ev_hale_round",
+      "statement": "From 21:44 to 22:05 Hale did his corridor round: trimming lamps, drawing blinds and handing out linen. He stayed in the corridor and entered no compartment."
+    },
+    {
+      "id": "f_eleanor_linen_952",
+      "kind": "movement",
+      "eventId": "ev_linen_eleanor",
+      "statement": "At 21:52 Hale handed Eleanor fresh linen at C2's door."
+    },
+    {
+      "id": "f_samuel_linen_956",
+      "kind": "movement",
+      "eventId": "ev_linen_samuel",
+      "statement": "At 21:56 Hale handed Samuel fresh linen at C4's door."
+    },
+    {
+      "id": "f_c3_c5_empty_958",
+      "kind": "observation",
+      "eventId": "ev_linen_bags",
+      "statement": "At 21:58 Hale hung linen bags on the door hooks of C3 and C5; both compartments were empty."
+    },
+    {
+      "id": "f_arthur_well_1005",
+      "kind": "observation",
+      "eventId": "ev_arthur_goodnight",
+      "statement": "At 22:05 Arthur opened his door, declined turndown and said goodnight. He looked well. The flask was capped on the desk and the clean glass still upturned. The door closed and latched."
+    },
+    {
+      "id": "f_no_movement_1005_1013",
+      "kind": "observation",
+      "eventId": "ev_station_watch",
+      "statement": "From 22:05 to 22:13 Hale was at the station facing the corridor; no one entered the corridor or opened a door."
+    },
+    {
+      "id": "f_pryor_called_hale_1013",
+      "kind": "movement",
+      "eventId": "ev_pryor_arrives",
+      "statement": "At about 22:13 Mrs Pryor fetched the attendant because her husband was trapped in their compartment in carriage B by a jammed door."
+    },
+    {
+      "id": "f_bell_1014",
+      "kind": "observation",
+      "eventId": "ev_bell_2",
+      "statement": "Arthur's bell rang repeatedly at 22:14 (logged) while Hale was with Mrs Pryor; Hale judged the trapped man more urgent and went to carriage B."
+    },
+    {
+      "id": "f_hale_car_b",
+      "kind": "movement",
+      "eventId": "ev_hale_car_b",
+      "statement": "From 22:14 to about 22:33 Hale was in carriage B freeing Mr Pryor; Dr Vale came out during the commotion."
+    },
+    {
+      "id": "f_discovery",
+      "kind": "observation",
+      "eventId": "ev_discovery",
+      "statement": "At 22:35 Hale reached C1, got no answer, opened the latched door and found Arthur dead on the floor beside the bell push."
+    },
+    {
+      "id": "f_939_glass_on_tray",
+      "kind": "physical",
+      "statement": "The glass Arthur used at 21:39 is still unwashed on Hale's pantry tray at the station."
+    },
+    {
+      "id": "f_fatal_drink",
+      "kind": "secret",
+      "eventId": "ev_fatal_drink",
+      "engineOnly": true,
+      "statement": "At about 22:10 Arthur drank from the poisoned flask. Players can only bound this to 22:05-22:14."
+    },
+    {
+      "id": "f_not_heart_attack",
+      "kind": "medical",
+      "eventId": "ev_vale_exam",
+      "statement": "Arthur's condition does not fit a simple heart attack in a man seen well at 22:05 and dead by 22:35."
+    },
+    {
+      "id": "f_poison_fast_onset",
+      "kind": "medical",
+      "eventId": "ev_vale_exam",
+      "statement": "Whatever killed Arthur acted within minutes of being swallowed, not hours."
+    },
+    {
+      "id": "f_medicinal_smell",
+      "kind": "physical",
+      "eventId": "ev_vale_exam",
+      "statement": "The glass on Arthur's desk has a faint medicinal smell, and so does the flask."
+    },
+    {
+      "id": "f_939_glass_no_smell",
+      "kind": "physical",
+      "statement": "The 21:39 glass from the attendant's tray has no medicinal smell."
+    },
+    {
+      "id": "f_death_window",
+      "kind": "medical",
+      "eventId": "ev_death",
+      "statement": "Arthur died between about 22:15 and 22:25."
+    },
+    {
+      "id": "f_poison_unidentified",
+      "kind": "medical",
+      "statement": "The substance cannot be identified on a moving train; the body, flask and glass must go to the police at the next station."
+    },
+    {
+      "id": "f_flask_state",
+      "kind": "physical",
+      "statement": "The flask is about one-third empty, with a faint medicinal smell."
+    },
+    {
+      "id": "f_fatal_glass_upright",
+      "kind": "physical",
+      "statement": "The glass on Arthur's desk is upright, with brandy residue and a medicinal smell."
+    },
+    {
+      "id": "f_wax_in_cap",
+      "kind": "physical",
+      "statement": "A small fragment of dark-red sealing wax is caught in the flask cap's thread."
+    },
+    {
+      "id": "f_bell_log",
+      "kind": "physical",
+      "statement": "The bell log records C1 at 21:36 and at 22:14, the second entry marked \"rang repeatedly.\""
+    },
+    {
+      "id": "f_service_log",
+      "kind": "physical",
+      "statement": "The service log records \"C3 window latch stiff — reported 8:40\"; water to C1 at 21:37-21:40; corridor round 21:44-22:05 with linen to C2 at 21:52 and C4 at 21:56; C1 declined turndown at 22:05; called to carriage B at 22:14."
+    },
+    {
+      "id": "f_document_case_contents",
+      "kind": "physical",
+      "statement": "Arthur's document case holds financial records showing fraudulent invoices, several authorised through Daniel's office; a sealed envelope to his solicitor asking for urgent review; and a note: \"Cross — final reconciliation before solicitor. No further delay.\" The records include a double-billed Leith dock-fee invoice."
+    },
+    {
+      "id": "f_eleanor_letter",
+      "kind": "physical",
+      "statement": "A letter from Eleanor's solicitor, Mr Graham of Edinburgh, to Eleanor, setting out settlement terms if she leaves Arthur, is in Eleanor's handbag. It is not the solicitor's envelope in Arthur's document case."
+    },
+    {
+      "id": "f_vial",
+      "kind": "physical",
+      "statement": "A small empty glass vial with a broken dark-red wax seal and a faint medicinal smell is in Daniel's suitcase, wrapped in a handkerchief inside a shoe."
+    },
+    {
+      "id": "f_wax_match",
+      "kind": "physical",
+      "statement": "The wax on the vial matches the wax fragment in the flask cap."
+    },
+    {
+      "id": "f_no_container_c1",
+      "kind": "physical",
+      "statement": "There is no vial, packet or container of any kind in C1."
+    },
+    {
+      "id": "f_trip_purpose",
+      "kind": "observation",
+      "statement": "Arthur is travelling to Edinburgh for a Blackwood Maritime board meeting."
+    },
+    {
+      "id": "f_daniel_partner_years",
+      "kind": "observation",
+      "statement": "Daniel has been Arthur's business partner for 11 years."
+    },
+    {
+      "id": "f_maya_joined_uninvited",
+      "kind": "observation",
+      "eventId": "ev_coffee_threat",
+      "statement": "Maya is not in Arthur's party; at coffee she sat down at his table uninvited."
+    },
+    {
+      "id": "f_maya_booked_to_corner",
+      "kind": "motive",
+      "statement": "Maya booked C5 on this train on purpose to corner Arthur."
+    },
+    {
+      "id": "f_samuel_invited",
+      "kind": "secret",
+      "statement": "Arthur invited Samuel on the trip personally, saying they would \"discuss the matter of my letter on the way\"; Samuel came hoping to talk him out of reporting him."
+    },
+    {
+      "id": "f_arthur_pours_glass",
+      "kind": "habit",
+      "statement": "Arthur always pours his brandy into a glass and never drinks from the flask's neck."
+    },
+    {
+      "id": "f_hale_no_motive",
+      "kind": "observation",
+      "statement": "Hale has worked for the railway for 14 years and had never met Arthur before tonight."
+    },
+    {
+      "id": "f_daniel_remark_850",
+      "kind": "observation",
+      "eventId": "ev_daniel_remark",
+      "statement": "At about 20:50 in the dining car Daniel told Maya, \"If you'll excuse me, I must see Arthur about the accounts.\""
+    },
+    {
+      "id": "f_party_retires_850",
+      "kind": "movement",
+      "eventId": "ev_party_retires",
+      "statement": "At 20:50 Arthur, Eleanor and Samuel passed the station to C1, C2 and C4."
+    },
+    {
+      "id": "f_eleanor_c2_early",
+      "kind": "movement",
+      "eventId": "ev_eleanor_c2_early",
+      "statement": "Eleanor was alone in C2 from 20:50 to 21:20."
+    },
+    {
+      "id": "f_samuel_c4_early",
+      "kind": "movement",
+      "eventId": "ev_samuel_c4_early",
+      "statement": "Samuel was in C4 writing notes from 20:50 to 21:08."
+    },
+    {
+      "id": "f_arthur_fetched_samuel",
+      "kind": "movement",
+      "eventId": "ev_arthur_fetches_samuel",
+      "statement": "At 21:08 Arthur stepped out of C1 and knocked at C4, asking Samuel to look at him."
+    },
+    {
+      "id": "f_hale_saw_daniel_visit_1",
+      "kind": "observation",
+      "eventId": "ev_daniel_visit_1",
+      "statement": "Hale saw Daniel go into C1 at 20:55 and pass back to the dining car at 21:05."
+    },
+    {
+      "id": "f_hale_saw_samuel_visit",
+      "kind": "observation",
+      "eventId": "ev_samuel_exam",
+      "statement": "Hale saw Samuel go into C1 with his bag at 21:10 and return to C4 at 21:16."
+    },
+    {
+      "id": "f_hale_saw_eleanor_visit",
+      "kind": "observation",
+      "eventId": "ev_eleanor_visit",
+      "statement": "Hale saw Eleanor cross from C2 into C1 at 21:20 and go straight back into C2 at 21:27, and heard raised voices from C1, a woman's and Mr Blackwood's, in between."
+    },
+    {
+      "id": "f_hale_saw_maya_visit",
+      "kind": "observation",
+      "eventId": "ev_maya_visit",
+      "statement": "Hale saw Maya pass the station and go into C1 at 21:31, and come out and pass back to the dining car at 21:34, \"looking furious.\""
+    },
+    {
+      "id": "f_maya_saw_daniel_c3_931",
+      "kind": "observation",
+      "eventId": "ev_maya_visit",
+      "statement": "At 21:31, on her way to C1, Maya saw Daniel's back as he went into C3."
+    },
+    {
+      "id": "f_daniel_heard_maya_931",
+      "kind": "observation",
+      "eventId": "ev_daniel_waits_c3",
+      "statement": "From C3 at about 21:31 Daniel heard a woman's voice in C1 and guessed it was Maya."
+    },
+    {
+      "id": "f_hale_heard_only_c3_latch",
+      "kind": "observation",
+      "eventId": "ev_hale_station_1",
+      "statement": "Walking the three paces from C1 to the station at 21:40, Hale had his back to the corridor for perhaps two seconds. No door clicked behind him. The first click he heard was C3's, which is why he looked up."
+    },
+    {
+      "id": "f_maya_saw_from_c5",
+      "kind": "observation",
+      "eventId": "ev_daniel_leaves_c1",
+      "statement": "Maya had pushed her C5 door to without latching it, and saw Daniel through the gap; he did not see her."
+    },
+    {
+      "id": "f_maya_saw_hale",
+      "kind": "observation",
+      "statement": "Maya saw Hale at the station when she passed at 21:43 and again at 21:47."
+    },
+    {
+      "id": "f_daniel_whisky_950",
+      "kind": "observation",
+      "eventId": "ev_daniel_whisky",
+      "statement": "At about 21:50 Daniel ordered a whisky in the dining car and seemed \"in very good spirits.\""
+    },
+    {
+      "id": "f_maya_din_0",
+      "kind": "movement",
+      "eventId": "ev_maya_din_0",
+      "statement": "Maya was in the dining car, writing, from 20:30 to 21:31."
+    },
+    {
+      "id": "f_maya_din_2",
+      "kind": "movement",
+      "eventId": "ev_maya_din_2",
+      "statement": "Maya was in the dining car from 21:47 to 22:45."
+    },
+    {
+      "id": "f_c3_window_stiff",
+      "kind": "physical",
+      "statement": "C3's window latch is stiff and will not open; it was reported at 20:40."
+    },
+    {
+      "id": "f_daniel_pretext_story",
+      "kind": "secret",
+      "statement": "Daniel's cover for the \"one last discrepancy\" is a double-billed Leith dock-fee invoice, which he calls \"a clerk's error, I wanted Arthur to see the correction before the board.\" The invoice is real and is one of the fraudulent ones in the document case."
+    },
+    {
+      "id": "f_arthur_distress_1014",
+      "kind": "observation",
+      "eventId": "ev_arthur_distress",
+      "statement": "At about 22:14 Arthur was already in distress: the bell rang repeatedly and he collapsed beside the bell push."
+    },
+    {
+      "id": "f_eleanor_heard_thud",
+      "kind": "secret",
+      "eventId": "ev_arthur_distress",
+      "statement": "At about 22:14 Eleanor heard a cry and a heavy thud from C1. Assuming he was in a temper after their argument, she chose not to go."
+    },
+    {
+      "id": "f_pryor_panel_buzzing",
+      "kind": "observation",
+      "eventId": "ev_arthur_distress",
+      "statement": "Standing at the station at 22:14, Mrs Pryor saw the C1 indicator buzz again and again: \"The little panel kept buzzing and buzzing, but I'm afraid I insisted he come with me.\""
+    },
+    {
+      "id": "f_body_position",
+      "kind": "physical",
+      "eventId": "ev_discovery",
+      "statement": "Arthur was found on the floor beside the bell push, with the glass upright on the desk."
+    },
+    {
+      "id": "f_eleanor_opened_door_1035",
+      "kind": "movement",
+      "eventId": "ev_after_discovery",
+      "statement": "At about 22:35 Eleanor opened her door at Hale's call."
+    },
+    {
+      "id": "f_hale_refused_samuel",
+      "kind": "observation",
+      "eventId": "ev_after_discovery",
+      "statement": "At about 22:35 Samuel came to his door and offered to examine Arthur. Hale refused, because railway rules say a doctor outside the party must be called, and he had just met Dr Vale during the carriage B incident."
+    },
+    {
+      "id": "f_suspects_confined",
+      "kind": "movement",
+      "eventId": "ev_suspects_confined",
+      "statement": "At about 22:45 the four suspects were told to return to their own compartments and stay there."
+    },
+    {
+      "id": "f_arthur_found_letter",
+      "kind": "secret",
+      "statement": "That afternoon Arthur found Eleanor's solicitor's letter in her luggage and kept it; that is how he knew about the solicitor at dinner."
+    }
+  ],
+  "knowledge": [
+    {
+      "characterId": "eleanor",
+      "factId": "f_coffee_threat",
+      "stance": "share"
+    },
+    {
+      "characterId": "eleanor",
+      "factId": "f_eleanor_arthur_argued_dinner",
+      "stance": "share"
+    },
+    {
+      "characterId": "eleanor",
+      "factId": "f_dinner_threat_eleanor",
+      "stance": "conceal",
+      "unlock": {
+        "evidenceIds": ["E5"]
+      },
+      "onReveal": "Admits what Arthur said at dinner."
+    },
+    {
+      "characterId": "eleanor",
+      "factId": "f_eleanor_solicitor",
+      "stance": "lie",
+      "lie": "Denies having contacted any solicitor.",
+      "unlock": {
+        "evidenceIds": ["E5"]
+      },
+      "onReveal": "Admits she contacted a solicitor and planned to leave him."
+    },
+    {
+      "characterId": "eleanor",
+      "factId": "f_eleanor_visit",
+      "stance": "share",
+      "note": "Admits the visit, but claims she only wanted to talk."
+    },
+    {
+      "characterId": "eleanor",
+      "factId": "f_eleanor_took_letter",
+      "stance": "lie",
+      "lie": "Says she only went to talk and took nothing.",
+      "unlock": {
+        "evidenceIds": ["E5"]
+      },
+      "onReveal": "Admits taking the letter and explains why."
+    },
+    {
+      "characterId": "eleanor",
+      "factId": "f_arthur_alive_927",
+      "stance": "share"
+    },
+    {
+      "characterId": "eleanor",
+      "factId": "f_arthur_anxious_tomorrow",
+      "stance": "share"
+    },
+    {
+      "characterId": "eleanor",
+      "factId": "f_eleanor_in_c2",
+      "stance": "share"
+    },
+    {
+      "characterId": "eleanor",
+      "factId": "f_eleanor_linen_952",
+      "stance": "share"
+    },
+    {
+      "characterId": "eleanor",
+      "factId": "f_eleanor_heard_footsteps",
+      "stance": "share"
+    },
+    {
+      "characterId": "eleanor",
+      "factId": "f_eleanor_never_touched_flask",
+      "stance": "share"
+    },
+    {
+      "characterId": "eleanor",
+      "factId": "f_arthur_brandy_habit",
+      "stance": "share"
+    },
+    {
+      "characterId": "eleanor",
+      "factId": "f_arthur_dislikes_disturbance",
+      "stance": "share"
+    },
+    {
+      "characterId": "eleanor",
+      "factId": "f_arthur_document_case",
+      "stance": "share"
+    },
+    {
+      "characterId": "daniel",
+      "factId": "f_coffee_threat",
+      "stance": "share"
+    },
+    {
+      "characterId": "daniel",
+      "factId": "f_eleanor_arthur_argued_dinner",
+      "stance": "share",
+      "note": "Uses it to steer suspicion towards Eleanor."
+    },
+    {
+      "characterId": "daniel",
+      "factId": "f_arthur_brandy_habit",
+      "stance": "share"
+    },
+    {
+      "characterId": "daniel",
+      "factId": "f_arthur_dislikes_disturbance",
+      "stance": "share"
+    },
+    {
+      "characterId": "daniel",
+      "factId": "f_arthur_document_case",
+      "stance": "share"
+    },
+    {
+      "characterId": "daniel",
+      "factId": "f_arthur_heart_condition",
+      "stance": "share",
+      "note": "Uses it to suggest a natural death."
+    },
+    {
+      "characterId": "daniel",
+      "factId": "f_arthur_solicitor_plan",
+      "stance": "conceal",
+      "unlock": {
+        "evidenceIds": ["E4"]
+      },
+      "onReveal": "Acknowledges the solicitor meeting but frames it as routine business."
+    },
+    {
+      "characterId": "daniel",
+      "factId": "f_daniel_embezzlement",
+      "stance": "lie",
+      "lie": "The discrepancies are \"administrative errors.\"",
+      "unlock": {
+        "evidenceIds": ["E4"]
+      },
+      "onReveal": "Disputes what the records mean; never admits the fraud outright."
+    },
+    {
+      "characterId": "daniel",
+      "factId": "f_daniel_visit_1",
+      "stance": "share"
+    },
+    {
+      "characterId": "daniel",
+      "factId": "f_daniel_din_1",
+      "stance": "share"
+    },
+    {
+      "characterId": "daniel",
+      "factId": "f_daniel_to_c3_930",
+      "stance": "share",
+      "note": "Admits it because he knows the attendant saw him pass: \"a quick trip to my compartment.\""
+    },
+    {
+      "characterId": "daniel",
+      "factId": "f_daniel_collected_vial",
+      "stance": "lie",
+      "lie": "It was only a quick trip to his compartment; nothing of note.",
+      "unlock": null
+    },
+    {
+      "characterId": "daniel",
+      "factId": "f_daniel_waited_c3",
+      "stance": "conceal",
+      "unlock": null
+    },
+    {
+      "characterId": "daniel",
+      "factId": "f_daniel_entered_c1_941",
+      "stance": "lie",
+      "lie": "Did not go back to Arthur's compartment.",
+      "unlock": {
+        "evidenceIds": ["E3", "E7"],
+        "mode": "any"
+      },
+      "onReveal": "Admits a \"brief\" visit about business and says he left at once."
+    },
+    {
+      "characterId": "daniel",
+      "factId": "f_daniel_pretext",
+      "stance": "conceal",
+      "unlock": {
+        "evidenceIds": ["E3", "E7"],
+        "mode": "any"
+      },
+      "onReveal": "Says he went to raise one last discrepancy: the Leith dock-fee invoice."
+    },
+    {
+      "characterId": "daniel",
+      "factId": "f_daniel_left_c1_944",
+      "stance": "lie",
+      "lie": "Did not go back to Arthur's compartment.",
+      "unlock": {
+        "evidenceIds": ["E3", "E7"],
+        "mode": "any"
+      },
+      "onReveal": "Says he left at once after a brief word."
+    },
+    {
+      "characterId": "daniel",
+      "factId": "f_daniel_poisoned_flask",
+      "stance": "lie",
+      "lie": "Never touched the flask.",
+      "unlock": null,
+      "onReveal": "Never confesses. See escalationLadder levels 5-7."
+    },
+    {
+      "characterId": "daniel",
+      "factId": "f_daniel_hid_vial",
+      "stance": "lie",
+      "lie": "Knows nothing about any vial; \"vials like that are sold everywhere.\"",
+      "unlock": null,
+      "onReveal": "Disputes what the evidence means. See escalationLadder."
+    },
+    {
+      "characterId": "daniel",
+      "factId": "f_daniel_to_din_948",
+      "stance": "share"
+    },
+    {
+      "characterId": "daniel",
+      "factId": "f_daniel_din_2",
+      "stance": "share"
+    },
+    {
+      "characterId": "samuel",
+      "factId": "f_coffee_threat",
+      "stance": "share"
+    },
+    {
+      "characterId": "samuel",
+      "factId": "f_samuel_family_acquaintance",
+      "stance": "share"
+    },
+    {
+      "characterId": "samuel",
+      "factId": "f_arthur_heart_condition",
+      "stance": "share",
+      "note": "Explains why a heart death might look plausible at first."
+    },
+    {
+      "characterId": "samuel",
+      "factId": "f_arthur_brandy_habit",
+      "stance": "share"
+    },
+    {
+      "characterId": "samuel",
+      "factId": "f_samuel_exam",
+      "stance": "share"
+    },
+    {
+      "characterId": "samuel",
+      "factId": "f_samuel_in_c4",
+      "stance": "share"
+    },
+    {
+      "characterId": "samuel",
+      "factId": "f_samuel_linen_956",
+      "stance": "share"
+    },
+    {
+      "characterId": "samuel",
+      "factId": "f_samuel_never_touched_flask",
+      "stance": "share"
+    },
+    {
+      "characterId": "samuel",
+      "factId": "f_samuel_did_not_examine_body",
+      "stance": "share"
+    },
+    {
+      "characterId": "samuel",
+      "factId": "f_samuel_error",
+      "stance": "conceal",
+      "unlock": {
+        "evidenceIds": ["E6"]
+      },
+      "onReveal": "Admits the prescribing error plainly."
+    },
+    {
+      "characterId": "samuel",
+      "factId": "f_samuel_letter",
+      "stance": "conceal",
+      "unlock": {
+        "evidenceIds": ["E6"]
+      },
+      "onReveal": "Admits receiving Arthur's letter and the threat to report him."
+    },
+    {
+      "characterId": "maya",
+      "factId": "f_coffee_threat",
+      "stance": "share"
+    },
+    {
+      "characterId": "maya",
+      "factId": "f_maya_libel_threat",
+      "stance": "share",
+      "note": "Guarded about her investigation; gives as little as possible."
+    },
+    {
+      "characterId": "maya",
+      "factId": "f_arthur_planned_reveal",
+      "stance": "share"
+    },
+    {
+      "characterId": "maya",
+      "factId": "f_daniel_handles_finances",
+      "stance": "share"
+    },
+    {
+      "characterId": "maya",
+      "factId": "f_maya_visit",
+      "stance": "share"
+    },
+    {
+      "characterId": "maya",
+      "factId": "f_maya_din_1",
+      "stance": "share"
+    },
+    {
+      "characterId": "maya",
+      "factId": "f_maya_to_c5_943",
+      "stance": "share",
+      "note": "If accused because she was in the corridor, explains the notebook trip and points out the attendant saw her."
+    },
+    {
+      "characterId": "maya",
+      "factId": "f_maya_in_c5",
+      "stance": "share"
+    },
+    {
+      "characterId": "maya",
+      "factId": "f_maya_to_din_947",
+      "stance": "share"
+    },
+    {
+      "characterId": "maya",
+      "factId": "f_daniel_left_c1_944",
+      "stance": "guarded",
+      "note": "Does not volunteer it. Tells what she saw if asked specifically about the corridor or Daniel's movements, and separates what she saw from what she suspects."
+    },
+    {
+      "characterId": "maya",
+      "factId": "f_maya_note_950",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "maya",
+      "factId": "f_maya_source_document",
+      "stance": "conceal",
+      "unlock": {
+        "evidenceIds": ["E7"]
+      },
+      "onReveal": "Admits having the document and refuses to name the source."
+    },
+    {
+      "characterId": "maya",
+      "factId": "f_maya_source_identity",
+      "stance": "conceal",
+      "unlock": null,
+      "onReveal": "Never names the source."
+    },
+    {
+      "characterId": "maya",
+      "factId": "f_maya_never_touched_flask",
+      "stance": "share"
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_arthur_brandy_habit",
+      "stance": "share"
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_arthur_dislikes_disturbance",
+      "stance": "share"
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_daniel_to_c3_930",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_bell_936",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_hale_water_visit",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_safe_drink",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_hale_at_station_940",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_daniel_entered_c1_941",
+      "stance": "guarded",
+      "note": "Answers fully if asked whether anyone went into C1 after he left."
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_maya_to_c5_943",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_daniel_left_c1_944",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_maya_in_c5",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_hale_round",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_maya_to_din_947",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_daniel_to_din_948",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_eleanor_linen_952",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_samuel_linen_956",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_c3_c5_empty_958",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_arthur_well_1005",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_no_movement_1005_1013",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_pryor_called_hale_1013",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_bell_1014",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_hale_car_b",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_discovery",
+      "stance": "share"
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_939_glass_on_tray",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "vale",
+      "factId": "f_not_heart_attack",
+      "stance": "share"
+    },
+    {
+      "characterId": "vale",
+      "factId": "f_poison_fast_onset",
+      "stance": "share"
+    },
+    {
+      "characterId": "vale",
+      "factId": "f_medicinal_smell",
+      "stance": "share"
+    },
+    {
+      "characterId": "vale",
+      "factId": "f_death_window",
+      "stance": "share"
+    },
+    {
+      "characterId": "vale",
+      "factId": "f_poison_unidentified",
+      "stance": "share"
+    },
+    {
+      "characterId": "vale",
+      "factId": "f_939_glass_no_smell",
+      "stance": "share",
+      "unlock": {
+        "evidenceIds": ["E3"]
+      },
+      "note": "Only knows this once shown the 21:39 glass from the attendant's tray."
+    },
+    {
+      "characterId": "pryor",
+      "factId": "f_pryor_called_hale_1013",
+      "stance": "share"
+    },
+    {
+      "characterId": "pryor",
+      "factId": "f_hale_car_b",
+      "stance": "share"
+    },
+    {
+      "characterId": "eleanor",
+      "factId": "f_trip_purpose",
+      "stance": "share"
+    },
+    {
+      "characterId": "daniel",
+      "factId": "f_trip_purpose",
+      "stance": "share"
+    },
+    {
+      "characterId": "samuel",
+      "factId": "f_trip_purpose",
+      "stance": "share"
+    },
+    {
+      "characterId": "eleanor",
+      "factId": "f_daniel_partner_years",
+      "stance": "share"
+    },
+    {
+      "characterId": "daniel",
+      "factId": "f_daniel_partner_years",
+      "stance": "share"
+    },
+    {
+      "characterId": "eleanor",
+      "factId": "f_maya_joined_uninvited",
+      "stance": "share"
+    },
+    {
+      "characterId": "daniel",
+      "factId": "f_maya_joined_uninvited",
+      "stance": "share"
+    },
+    {
+      "characterId": "samuel",
+      "factId": "f_maya_joined_uninvited",
+      "stance": "share"
+    },
+    {
+      "characterId": "maya",
+      "factId": "f_maya_joined_uninvited",
+      "stance": "share"
+    },
+    {
+      "characterId": "eleanor",
+      "factId": "f_arthur_pours_glass",
+      "stance": "share"
+    },
+    {
+      "characterId": "daniel",
+      "factId": "f_arthur_pours_glass",
+      "stance": "share"
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_arthur_pours_glass",
+      "stance": "share"
+    },
+    {
+      "characterId": "maya",
+      "factId": "f_maya_booked_to_corner",
+      "stance": "share",
+      "note": "Admits it if asked how she came to be on the train; gives as little as possible."
+    },
+    {
+      "characterId": "samuel",
+      "factId": "f_samuel_invited",
+      "stance": "conceal",
+      "unlock": {
+        "evidenceIds": ["E6"]
+      },
+      "onReveal": "Admits he came hoping to talk Arthur out of reporting him."
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_hale_no_motive",
+      "stance": "share"
+    },
+    {
+      "characterId": "daniel",
+      "factId": "f_daniel_remark_850",
+      "stance": "share"
+    },
+    {
+      "characterId": "maya",
+      "factId": "f_daniel_remark_850",
+      "stance": "share",
+      "note": "This is why her note says \"Second visit tonight?\""
+    },
+    {
+      "characterId": "lamont",
+      "factId": "f_daniel_remark_850",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_party_retires_850",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "eleanor",
+      "factId": "f_eleanor_c2_early",
+      "stance": "share"
+    },
+    {
+      "characterId": "samuel",
+      "factId": "f_samuel_c4_early",
+      "stance": "share"
+    },
+    {
+      "characterId": "samuel",
+      "factId": "f_arthur_fetched_samuel",
+      "stance": "share"
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_arthur_fetched_samuel",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_hale_saw_daniel_visit_1",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_hale_saw_samuel_visit",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_hale_saw_eleanor_visit",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_hale_saw_maya_visit",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "maya",
+      "factId": "f_maya_saw_daniel_c3_931",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "daniel",
+      "factId": "f_daniel_heard_maya_931",
+      "stance": "share",
+      "note": "Uses it to deflect suspicion onto Maya."
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_hale_heard_only_c3_latch",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "maya",
+      "factId": "f_maya_saw_from_c5",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "maya",
+      "factId": "f_maya_saw_hale",
+      "stance": "share"
+    },
+    {
+      "characterId": "lamont",
+      "factId": "f_daniel_whisky_950",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "maya",
+      "factId": "f_maya_din_0",
+      "stance": "share"
+    },
+    {
+      "characterId": "maya",
+      "factId": "f_maya_din_2",
+      "stance": "share"
+    },
+    {
+      "characterId": "lamont",
+      "factId": "f_maya_din_0",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "lamont",
+      "factId": "f_maya_din_1",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "lamont",
+      "factId": "f_maya_din_2",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "lamont",
+      "factId": "f_daniel_din_1",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "lamont",
+      "factId": "f_daniel_din_2",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "daniel",
+      "factId": "f_c3_window_stiff",
+      "stance": "share"
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_c3_window_stiff",
+      "stance": "guarded"
+    },
+    {
+      "characterId": "daniel",
+      "factId": "f_daniel_pretext_story",
+      "stance": "lie",
+      "lie": "The \"one last discrepancy\" was a double-billed Leith dock-fee invoice; \"a clerk's error, I wanted Arthur to see the correction before the board.\"",
+      "unlock": {
+        "evidenceIds": ["E4"]
+      },
+      "onReveal": "Insists the invoice was a clerical error; never admits it was fraudulent.",
+      "note": "Only offered once he has admitted the 21:41 visit."
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_arthur_distress_1014",
+      "stance": "guarded",
+      "note": "He knows only of the repeated bell; he did not see Arthur."
+    },
+    {
+      "characterId": "eleanor",
+      "factId": "f_eleanor_heard_thud",
+      "stance": "conceal",
+      "unlock": {
+        "evidenceIds": ["E3"],
+        "alsoWhen": "Asked directly whether she heard anything from C1 after 22:00, on the second asking or when pressed."
+      },
+      "onReveal": "Admits it, visibly shaken, and becomes more forthcoming."
+    },
+    {
+      "characterId": "pryor",
+      "factId": "f_pryor_panel_buzzing",
+      "stance": "share"
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_body_position",
+      "stance": "share"
+    },
+    {
+      "characterId": "vale",
+      "factId": "f_body_position",
+      "stance": "share"
+    },
+    {
+      "characterId": "eleanor",
+      "factId": "f_eleanor_opened_door_1035",
+      "stance": "share"
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_eleanor_opened_door_1035",
+      "stance": "share"
+    },
+    {
+      "characterId": "samuel",
+      "factId": "f_hale_refused_samuel",
+      "stance": "share",
+      "note": "Still offended about it."
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_hale_refused_samuel",
+      "stance": "share"
+    },
+    {
+      "characterId": "eleanor",
+      "factId": "f_suspects_confined",
+      "stance": "share"
+    },
+    {
+      "characterId": "daniel",
+      "factId": "f_suspects_confined",
+      "stance": "share"
+    },
+    {
+      "characterId": "samuel",
+      "factId": "f_suspects_confined",
+      "stance": "share"
+    },
+    {
+      "characterId": "maya",
+      "factId": "f_suspects_confined",
+      "stance": "share"
+    },
+    {
+      "characterId": "hale",
+      "factId": "f_suspects_confined",
+      "stance": "share"
+    },
+    {
+      "characterId": "eleanor",
+      "factId": "f_arthur_found_letter",
+      "stance": "conceal",
+      "unlock": {
+        "evidenceIds": ["E5"]
+      },
+      "onReveal": "Explains Arthur had taken the letter from her luggage and she took it back."
+    },
+    {
+      "characterId": "vale",
+      "factId": "f_hale_car_b",
+      "stance": "share"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "E1",
+      "name": "Samuel's Medical Notes",
+      "locationId": "C4",
+      "foundIn": "Samuel's medical bag",
+      "contents": [
+        "Examination of Arthur at 21:10-21:16. Alive, coherent, raised pulse consistent with anxiety. No acute symptoms."
+      ],
+      "revealsFactIds": ["f_samuel_exam"],
+      "proves": "Arthur was alive and well at 21:16; Samuel's visit was before the safe drink.",
+      "doesNotProve": "Anything about the cause of death.",
+      "redHerring": false
+    },
+    {
+      "id": "E2",
+      "name": "The Brandy Flask and the Fatal Glass",
+      "locationId": "C1",
+      "foundIn": "Arthur's desk",
+      "contents": [
+        "The flask is about one-third empty, with a faint medicinal smell.",
+        "The glass is upright, with brandy residue and the same smell.",
+        "A small fragment of dark-red sealing wax is caught in the flask cap's thread.",
+        "Arthur's body lies on the floor beside the bell push."
+      ],
+      "revealsFactIds": [
+        "f_flask_state",
+        "f_fatal_glass_upright",
+        "f_wax_in_cap",
+        "f_medicinal_smell",
+        "f_body_position"
+      ],
+      "proves": "With Dr Vale's assessment, poisoning is likely and the poison was in the flask. The wax fragment is a physical trace of whatever was added.",
+      "doesNotProve": "Who added it.",
+      "redHerring": false
+    },
+    {
+      "id": "E3",
+      "name": "The Attendant's Service Log and the 21:39 Glass",
+      "locationId": "STN",
+      "foundIn": "Attendant's station",
+      "contents": [
+        "Bell log: C1 at 21:36, and C1 at 22:14 marked \"rang repeatedly.\"",
+        "Service entries: \"C3 window latch stiff — reported 8:40\"; water to C1 at 21:37-21:40; corridor round at 21:44-22:05, with linen handed to C2 at 21:52 and C4 at 21:56; C1 declined turndown at 22:05; called to carriage B at 22:14.",
+        "The unwashed glass Arthur used at 21:39, still on the pantry tray."
+      ],
+      "revealsFactIds": [
+        "f_bell_log",
+        "f_service_log",
+        "f_939_glass_on_tray",
+        "f_c3_window_stiff",
+        "f_arthur_distress_1014"
+      ],
+      "withTestimony": {
+        "characterId": "hale",
+        "factIds": [
+          "f_safe_drink",
+          "f_daniel_entered_c1_941",
+          "f_daniel_left_c1_944",
+          "f_maya_to_c5_943",
+          "f_maya_to_din_947",
+          "f_arthur_well_1005",
+          "f_no_movement_1005_1013",
+          "f_hale_heard_only_c3_latch",
+          "f_hale_saw_maya_visit",
+          "f_hale_saw_eleanor_visit",
+          "f_hale_saw_samuel_visit",
+          "f_hale_saw_daniel_visit_1"
+        ],
+        "note": "Hale gives these when asked specifically."
+      },
+      "proves": "The flask was safe at 21:39; the access window; Daniel's second visit; Eleanor and Samuel in their compartments. The repeated bell shows Arthur was already in distress at 22:14.",
+      "doesNotProve": "What Daniel did inside C1.",
+      "redHerring": false
+    },
+    {
+      "id": "E4",
+      "name": "Arthur's Document Case",
+      "locationId": "C1",
+      "foundIn": "Arthur's compartment",
+      "access": "The case is locked; the key is in Arthur's waistcoat pocket.",
+      "contents": [
+        "Company financial records showing fraudulent invoices, several authorised through Daniel's office. One of them is a double-billed Leith dock-fee invoice.",
+        "A sealed envelope addressed to Arthur's solicitor asking for urgent review of the records.",
+        "A handwritten note: \"Cross — final reconciliation before solicitor. No further delay.\""
+      ],
+      "revealsFactIds": [
+        "f_document_case_contents",
+        "f_daniel_embezzlement",
+        "f_arthur_solicitor_plan",
+        "f_daniel_pretext_story"
+      ],
+      "proves": "Daniel's motive, and that Arthur planned to act the next morning.",
+      "doesNotProve": "Murder.",
+      "redHerring": false
+    },
+    {
+      "id": "E5",
+      "name": "Eleanor's Letter",
+      "locationId": "C2",
+      "foundIn": "Eleanor's handbag",
+      "contents": [
+        "A letter from Eleanor's solicitor, Mr Graham of Edinburgh, to Eleanor, setting out settlement terms if she leaves Arthur. It is not the solicitor's envelope in Arthur's document case."
+      ],
+      "revealsFactIds": [
+        "f_eleanor_letter",
+        "f_eleanor_took_letter",
+        "f_eleanor_solicitor",
+        "f_arthur_found_letter"
+      ],
+      "proves": "Eleanor lied about taking something and had a motive.",
+      "doesNotProve": "Anything about the flask.",
+      "redHerring": true
+    },
+    {
+      "id": "E6",
+      "name": "Arthur's Letter to Samuel",
+      "locationId": "C4",
+      "foundIn": "Samuel's medical bag, in a folder behind his notes",
+      "contents": [
+        "A letter dated 2 October 1934 from Arthur to Samuel, describing the adverse reaction in the spring and stating that Arthur will report him to the General Medical Council after the journey."
+      ],
+      "revealsFactIds": ["f_samuel_letter", "f_samuel_error", "f_samuel_invited"],
+      "proves": "Samuel had a motive and hid it.",
+      "doesNotProve": "Any contact with the flask after 21:16.",
+      "redHerring": true
+    },
+    {
+      "id": "E7",
+      "name": "Maya's Satchel: Notebook and Confidential Document",
+      "locationId": null,
+      "foundIn": "On Maya's person: the satchel she carries",
+      "contents": [
+        "Notebook entry, dated 21:50: \"9.44 — D.C. came out of A.B.'s compartment, straight into his own. Second visit tonight? Ask.\"",
+        "A confidential document from an unnamed company source about suspicious payments."
+      ],
+      "revealsFactIds": ["f_maya_note_950", "f_daniel_left_c1_944", "f_maya_source_document"],
+      "proves": "An independent second witness to Daniel leaving C1 at 21:44.",
+      "doesNotProve": "What Daniel did inside. The document explains her secrecy but is not murder evidence.",
+      "redHerring": false,
+      "carriedBy": "maya"
+    },
+    {
+      "id": "E8",
+      "name": "The Broken-Seal Vial",
+      "locationId": "C3",
+      "foundIn": "Daniel's suitcase, wrapped in a handkerchief inside a shoe",
+      "contents": [
+        "A small empty glass vial with a broken dark-red wax seal, and a faint medicinal smell."
+      ],
+      "revealsFactIds": ["f_vial", "f_wax_match"],
+      "proves": "Its wax matches the fragment in the flask cap (E2). It physically links Daniel's belongings to the flask.",
+      "doesNotProve": "On its own, that Daniel used it. It is decisive only together with E3 and E4.",
+      "redHerring": false,
+      "simulationRule": {
+        "trigger": "The player has not searched C3 by the third simulation tick after questioning Daniel about the flask.",
+        "action": "Daniel moves the vial to his coat pocket.",
+        "newLocation": "On Daniel's person (coat pocket)",
+        "constraints": [
+          "The evidence history records the move with its time.",
+          "The vial can still be found by searching Daniel himself.",
+          "It never leaves the train and is never destroyed."
+        ]
+      },
+      "locationNote": "Never destroyed and always findable: in C3, or on Daniel's coat after the simulation rule fires."
+    },
+    {
+      "id": "X1",
+      "name": "The Absent Container",
+      "optional": true,
+      "locationId": "C1",
+      "foundIn": "A search of Arthur's compartment",
+      "contents": ["No vial, packet or container of any kind is found in C1."],
+      "revealsFactIds": ["f_no_container_c1"],
+      "proves": "Rules out Arthur poisoning himself.",
+      "doesNotProve": "Who poisoned him.",
+      "redHerring": false
+    }
+  ],
+  "rules": {
+    "global": [
+      "The timeline and evidence here are canonical. No character may invent an event that changes them.",
+      "A character may lie only where their stance on a fact is \"lie\". They may be vague or evasive about anything they \"conceal\".",
+      "No character knows another character's private information unless the case says they witnessed it.",
+      "Daniel never confesses on accusation alone (see his escalation ladder).",
+      "Innocent suspects become more forthcoming once their own secret has been exposed."
+    ],
+    "stances": {
+      "share": "True and known; answers truthfully when asked, may volunteer it.",
+      "guarded": "True and known; does not volunteer it, but answers truthfully and precisely when asked specifically.",
+      "conceal": "True and known; evades or withholds it until the unlock condition is met, then follows onReveal. unlock null means never.",
+      "lie": "Asserts the false version in \"lie\" until the unlock condition is met, then follows onReveal. unlock null means the lie is never dropped."
+    },
+    "timeTolerance": {
+      "approximate": "A statement using \"around\", \"about\" or \"roughly\" with a time matches the truth within +/-10 minutes.",
+      "approximateMinutes": 10,
+      "exact": "A statement giving an exact time matches within +/-2 minutes.",
+      "exactMinutes": 2,
+      "order": "A statement about order (\"before\", \"after\") must match the true order exactly."
+    },
+    "evidenceState": [
+      "Discovering evidence unlocks new questions. It never changes history.",
+      "If the vial is moved (E8 simulation rule), record the move with its time. The vial stays findable.",
+      "The game distinguishes suspicion, corroboration and proof. No single clue ends the case."
+    ],
+    "timelineIntegrity": [
+      "The safe drink is at about 21:39, during Hale's 21:37-21:40 visit. Arthur always pours into a glass, so the clean upturned glass at 22:05 means he had not drunk since.",
+      "The safe drink is proven clean by Arthur being well at 22:05 combined with the poison's onset within minutes.",
+      "Daniel visits C1 twice: 20:55-21:05 (admitted) and 21:41-21:44 (denied).",
+      "Maya sees Daniel leave at 21:44 and writes the entry at 21:50, not on the spot.",
+      "Hale never enters any compartment between 21:40 and 22:35 except C1 at 22:35.",
+      "Samuel examines Arthur at 21:10-21:16 and does not examine the body.",
+      "The fatal drink is between 22:05 and 22:14. Its exact time (about 22:10) is engine-only.",
+      "Nothing enters or leaves C1 between 22:14 and 22:35. The corridor is unwatched then, but Arthur was already in distress at 22:14 (repeated bell, Mrs Pryor, Eleanor's thud), so nothing after 22:14 matters.",
+      "The door's spring latch is never described as an inside-only lock."
+    ],
+    "consistencyConditions": [
+      "Exactly one culprit: Daniel Cross.",
+      "Every event has a fixed time or a bounded interval.",
+      "The safe drink (about 21:39) is before Daniel's entry (21:41).",
+      "C1's door is watched without a gap from 21:39 to 22:13.",
+      "Daniel is the only entry to C1 in that window.",
+      "Arthur is seen well at 22:05.",
+      "The poison's onset (\"within minutes\") is stated by Dr Vale and is consistent everywhere.",
+      "Maya's notebook entry is written at 21:50 about 21:44.",
+      "Samuel does not examine the body.",
+      "The solicitor's envelope (E4) and Eleanor's letter (E5) are separate documents.",
+      "Every evidence item has exactly one location (or one carrier).",
+      "Every innocent has a motive and a lie, and each lie concerns something other than the murder.",
+      "Arthur is in visible distress by 22:14, shown by at least two independent sources.",
+      "Every door opening or closing in the corridor between 21:39 and 22:13 is either seen or heard by Hale.",
+      "Every passage past the station between 20:48 and 22:13 appears in Hale's account.",
+      "Daniel never sees Maya between 21:43 and 21:47.",
+      "Hale cannot be accused, and nothing in the case gives him a motive."
+    ]
+  },
+  "openQuestions": [
+    "Remaining gaps after v1.2. Characters must not invent answers to them.",
+    "Daniel's stated reason for the 21:30 trip to C3, if pressed beyond \"a quick trip to my compartment.\"",
+    "The train guard who asks the detective to investigate is not defined as a character and cannot be questioned."
+  ],
+  "layout": {
+    "description": "From the station end: C1 and C2 face each other closest to the station, about three paces away; C4 is in the middle; C3 and C5 face each other at the rear end.",
+    "orderFromStation": [["C1", "C2"], ["C4"], ["C3", "C5"]]
+  }
+}
