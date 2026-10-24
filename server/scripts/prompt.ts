@@ -5,12 +5,10 @@
 //   npm run prompt -w server -- daniel - "Did you go back?" ask a question (no evidence shown)
 //   npm run prompt -w server -- --leaks                    leak check for every character
 
-import type { CaseData } from '@mystery/shared';
-import caseJson from '../src/data/case.json' with { type: 'json' };
+import { caseData } from '../src/data/case';
 import { buildSystemPrompt } from '../src/engine/promptBuilder';
 import { callModel } from '../src/llm';
 
-const caseData = caseJson as unknown as CaseData;
 const [characterId = 'daniel', evidenceArg = '-', question] = process.argv.slice(2);
 
 if (characterId === '--leaks') {
