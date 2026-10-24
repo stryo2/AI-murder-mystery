@@ -53,6 +53,35 @@ export interface HistoryResponse {
   messages: ConversationMessage[];
 }
 
+/** An evidence item as the player sees it once found. No proves / redHerring / fact ids. */
+export interface EvidenceView {
+  id: string;
+  name: string;
+  foundIn: string;
+  contents: string[];
+}
+
+export interface SceneItemView {
+  id: string;
+  name: string;
+  searched: boolean;
+  /** What searching it turned up. Empty until searched. */
+  evidence: EvidenceView[];
+}
+
+/** GET /api/scene: every searchable spot, grouped by place, with this game's progress. */
+export interface SceneResponse {
+  locations: { id: string; name: string; items: SceneItemView[] }[];
+}
+
+export interface SearchRequest {
+  sessionId: string;
+  itemId: string;
+}
+
+/** POST /api/scene/search: the item, now searched, with what it revealed. */
+export type SearchResponse = SceneItemView;
+
 /** Body of any non-2xx API response. */
 export interface ApiError {
   error: string;

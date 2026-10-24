@@ -1462,7 +1462,7 @@
     {
       "id": "f_service_log",
       "kind": "physical",
-      "statement": "The service log records \"C3 window latch stiff — reported 8:40\"; water to C1 at 21:37-21:40; corridor round 21:44-22:05 with linen to C2 at 21:52 and C4 at 21:56; C1 declined turndown at 22:05; called to carriage B at 22:14."
+      "statement": "The service log records \"C3 window latch stiff — reported 20:40\"; water to C1 at 21:37-21:40; corridor round 21:44-22:05 with linen to C2 at 21:52 and C4 at 21:56; C1 declined turndown at 22:05; called to carriage B at 22:14."
     },
     {
       "id": "f_document_case_contents",
@@ -2584,7 +2584,7 @@
       "foundIn": "Attendant's station",
       "contents": [
         "Bell log: C1 at 21:36, and C1 at 22:14 marked \"rang repeatedly.\"",
-        "Service entries: \"C3 window latch stiff — reported 8:40\"; water to C1 at 21:37-21:40; corridor round at 21:44-22:05, with linen handed to C2 at 21:52 and C4 at 21:56; C1 declined turndown at 22:05; called to carriage B at 22:14.",
+        "Service entries: \"C3 window latch stiff — reported 20:40\"; water to C1 at 21:37-21:40; corridor round at 21:44-22:05, with linen handed to C2 at 21:52 and C4 at 21:56; C1 declined turndown at 22:05; called to carriage B at 22:14.",
         "The unwashed glass Arthur used at 21:39, still on the pantry tray."
       ],
       "revealsFactIds": [
@@ -2784,5 +2784,56 @@
   "layout": {
     "description": "From the station end: C1 and C2 face each other closest to the station, about three paces away; C4 is in the middle; C3 and C5 face each other at the rear end.",
     "orderFromStation": [["C1", "C2"], ["C4"], ["C3", "C5"]]
-  }
+  },
+  "sceneItems": [
+    {
+      "id": "c1_desk",
+      "name": "Arthur's desk",
+      "locationId": "C1",
+      "evidenceIds": ["E2"]
+    },
+    {
+      "id": "c1_document_case",
+      "name": "Leather document case",
+      "locationId": "C1",
+      "evidenceIds": ["E4"]
+    },
+    {
+      "id": "c1_rest",
+      "name": "The rest of the compartment",
+      "locationId": "C1",
+      "evidenceIds": ["X1"]
+    },
+    {
+      "id": "c2_handbag",
+      "name": "Eleanor's handbag",
+      "locationId": "C2",
+      "evidenceIds": ["E5"]
+    },
+    {
+      "id": "c3_suitcase",
+      "name": "Daniel's suitcase",
+      "locationId": "C3",
+      "evidenceIds": ["E8"]
+    },
+    {
+      "id": "c4_medical_bag",
+      "name": "Samuel's medical bag",
+      "locationId": "C4",
+      "evidenceIds": ["E1", "E6"]
+    },
+    {
+      "id": "c5_satchel",
+      "name": "Maya's satchel",
+      "locationId": "C5",
+      "note": "E7 is carried by Maya; she is in C5 from the opening state on.",
+      "evidenceIds": ["E7"]
+    },
+    {
+      "id": "stn_log_and_tray",
+      "name": "Service log and pantry tray",
+      "locationId": "STN",
+      "evidenceIds": ["E3"]
+    }
+  ]
 }

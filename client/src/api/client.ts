@@ -7,6 +7,9 @@ import type {
   InterrogateRequest,
   InterrogateResponse,
   InterrogateStreamEvent,
+  SceneResponse,
+  SearchRequest,
+  SearchResponse,
 } from '@mystery/shared';
 
 async function errorFrom(res: Response, label: string): Promise<Error> {
@@ -68,6 +71,9 @@ export const api = {
       'GET',
       `/interrogate/history?${new URLSearchParams({ sessionId, characterId })}`,
     ),
+  scene: (sessionId: string) =>
+    request<SceneResponse>('GET', `/scene?${new URLSearchParams({ sessionId })}`),
+  search: (body: SearchRequest) => request<SearchResponse>('POST', '/scene/search', body),
   interrogate: (body: InterrogateRequest) =>
     request<InterrogateResponse>('POST', '/interrogate', body),
   interrogateStream,

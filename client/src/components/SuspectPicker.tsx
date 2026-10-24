@@ -6,6 +6,7 @@ interface SuspectPickerProps {
   characters: CharacterSummary[];
   sessionId: string;
   onPick: (characterId: string) => void;
+  onSearch: () => void;
   onBriefing: () => void;
   onNewGame: () => void;
 }
@@ -15,6 +16,7 @@ export function SuspectPicker({
   characters,
   sessionId,
   onPick,
+  onSearch,
   onBriefing,
   onNewGame,
 }: SuspectPickerProps) {
@@ -30,6 +32,9 @@ export function SuspectPicker({
           <p>You can return to anyone at any time. They remember what you asked.</p>
         </div>
         <div className="header-actions">
+          <button type="button" onClick={onSearch}>
+            Search the train
+          </button>
           <button type="button" className="secondary" onClick={onBriefing}>
             Briefing
           </button>

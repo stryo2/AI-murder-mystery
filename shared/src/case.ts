@@ -92,6 +92,16 @@ export interface Evidence {
   [key: string]: unknown;
 }
 
+/** A spot the player can search. Searching it reveals every evidence item listed. */
+export interface SceneItem {
+  id: string;
+  /** What the player sees before searching. Must not give the clue away. */
+  name: string;
+  locationId: string;
+  evidenceIds: string[];
+  note?: string;
+}
+
 export interface CaseData {
   meta: CaseMeta;
   solution: Record<string, unknown>;
@@ -105,4 +115,5 @@ export interface CaseData {
   rules: { global: string[]; stances: Record<Stance, string>; [key: string]: unknown };
   openQuestions: string[];
   layout: { description: string; orderFromStation: string[][] };
+  sceneItems: SceneItem[];
 }

@@ -1,5 +1,5 @@
-// In-memory conversation history, per game session and per character.
-// Week 3 moves this into Postgres (sessions + messages tables); until then a server restart
+// In-memory game state, per session: conversation history per character, and which scene
+// items the player has searched. Week 3 moves this into Postgres; until then a server restart
 // forgets every game.
 
 import type { ChatMessage } from '../llm';
@@ -14,9 +14,14 @@ const MAX_SESSIONS = 1000;
  */
 export const MAX_MESSAGES_IN_PROMPT = 40;
 
+/** Session ids are made by the client, so check them before using one as a key. */
+export const SESSION_ID = /^[A-Za-z0-9-]{8,64}$/;
+
 interface Session {
   lastUsed: number;
   conversations: Map<string, ChatMessage[]>;
+  /** Scene item ids, in the order they were searched. */
+  searchedItems: Set<string>;
 }
 
 // A Map keeps insertion order; touching a session re-inserts it, so the first key is the oldest.
@@ -28,7 +33,7 @@ function touch(sessionId: string): Session {
   const now = Date.now();
   let session = sessions.get(sessionId);
   if (session && now - session.lastUsed > SESSION_TTL_MS) session = undefined;
-  session ??= { lastUsed: now, conversations: new Map() };
+  session ??= { lastUsed: now, conversations: new Map(), searchedItems: new Set() };
   session.lastUsed = now;
   sessions.delete(sessionId);
   sessions.set(sessionId, session);
@@ -70,4 +75,12 @@ export function tryLock(sessionId: string, characterId: string): boolean {
 
 export function unlock(sessionId: string, characterId: string) {
   busy.delete(`${sessionId}/${characterId}`);
+}
+
+export function getSearchedItems(sessionId: string): Set<string> {
+  return new Set(touch(sessionId).searchedItems);
+}
+
+export function markSearched(sessionId: string, itemId: string) {
+  touch(sessionId).searchedItems.add(itemId);
 }

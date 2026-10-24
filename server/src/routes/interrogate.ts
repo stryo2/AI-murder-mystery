@@ -23,12 +23,12 @@ import {
   appendTurn,
   getHistory,
   MAX_MESSAGES_IN_PROMPT,
+  SESSION_ID,
   tryLock,
   unlock,
-} from '../sessions/conversationStore';
+} from '../sessions/sessionStore';
 
 const MAX_QUESTION_LENGTH = 1000;
-const SESSION_ID = /^[A-Za-z0-9-]{8,64}$/;
 
 export const interrogateRouter = Router();
 

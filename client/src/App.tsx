@@ -3,10 +3,15 @@ import type { CaseBriefing, CharacterSummary } from '@mystery/shared';
 import { api } from './api/client';
 import { Briefing } from './components/Briefing';
 import { Chat } from './components/Chat';
+import { Scene } from './components/Scene';
 import { SuspectPicker } from './components/SuspectPicker';
 import { getSessionId, hasReadBriefing, markBriefingRead, startNewSession } from './session';
 
-type Screen = { name: 'briefing' } | { name: 'picker' } | { name: 'chat'; characterId: string };
+type Screen =
+  | { name: 'briefing' }
+  | { name: 'picker' }
+  | { name: 'scene' }
+  | { name: 'chat'; characterId: string };
 
 export function App() {
   const [sessionId, setSessionId] = useState(getSessionId);
@@ -46,6 +51,9 @@ export function App() {
   if (!briefing || !characters) return <p className="status">Boarding the train…</p>;
 
   if (screen.name === 'briefing') return <Briefing briefing={briefing} onBegin={begin} />;
+  if (screen.name === 'scene') {
+    return <Scene sessionId={sessionId} onBack={() => setScreen({ name: 'picker' })} />;
+  }
 
   const chatWith =
     screen.name === 'chat' ? characters.find((c) => c.id === screen.characterId) : undefined;
@@ -66,6 +74,7 @@ export function App() {
       characters={characters}
       sessionId={sessionId}
       onPick={(characterId) => setScreen({ name: 'chat', characterId })}
+      onSearch={() => setScreen({ name: 'scene' })}
       onBriefing={() => setScreen({ name: 'briefing' })}
       onNewGame={newGame}
     />
