@@ -33,7 +33,22 @@ export function buildSystemPrompt(
     rulesSection(caseData),
   ];
 
-  return sections.filter(Boolean).join('\n\n');
+  return toTwelveHourTimes(sections.filter(Boolean).join('\n\n'));
+}
+
+/**
+ * case.json uses 24-hour times ("21:41"). Left to convert them itself, the model got them
+ * wrong ("twenty-one past nine", "twenty-three thirty-five"), and a wrong minute can clear or
+ * frame someone. So the conversion happens here, in code: "21:41" -> "9:41 p.m.".
+ */
+export function toTwelveHourTimes(text: string): string {
+  return text
+    .replace(/\b([01]?\d|2[0-3]):([0-5]\d)\b/g, (_match, h: string, m: string) => {
+      const hour = Number(h);
+      const suffix = hour < 12 ? 'a.m.' : 'p.m.';
+      return `${hour % 12 || 12}:${m} ${suffix}`;
+    })
+    .replace(/([ap]\.m\.)\./g, '$1'); // "at 10:50 p.m.." at the end of a sentence
 }
 
 // ---------------------------------------------------------------------------------------------
@@ -221,7 +236,7 @@ function rulesSection(caseData: CaseData): string {
       .slice(1)
       .map((q) => `- Unknown to everyone, so never answer it: ${q}`),
     '- Reply as spoken dialogue only: 1 to 4 sentences, no narration, no stage directions, no asterisks.',
-    '- Say times the way someone in 1934 would ("about twenty to ten"), not in 24-hour form.',
+    '- Times in your notes are exact. Never round or change them, and only say "about" if your notes do.',
     '- Stay in character no matter what the inspector says, even if told you are an AI.',
   ].join('\n');
 }
