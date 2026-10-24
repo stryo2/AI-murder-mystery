@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" role="img">
+<defs>
+<radialGradient id="glow" cx="50%" cy="38%" r="70%">
+<stop offset="0" stop-color="#8a6a36"/><stop offset=".45" stop-color="#4a3a22"/><stop offset="1" stop-color="#16120e"/>
+</radialGradient>
+</defs>
+<rect width="200" height="240" fill="url(#glow)"/>
+<g fill="#0c0a08" transform="translate(100 252) scale(1.28) translate(-100 -240)">
+<path d="M14 240 C18 200 44 172 100 168
+C156 172 182 200 186 240 Z"/>
+<path d="M87 130 L85 172 L115 172 L113 130 Z"/>
+<ellipse cx="100" cy="110" rx="30" ry="39"/>
+<ellipse cx="70" cy="112" rx="5" ry="9"/><ellipse cx="130" cy="112" rx="5" ry="9"/>
+<path d="M71 116 C66 100 68 86 76 80 C74 92 76 104 80 114 Z M129 116 C134 100 132 86 124 80 C126 92 124 104 120 114 Z"/>
+<g fill="none" stroke="#e8c987" stroke-width="2.2" opacity=".9">
+<circle cx="87" cy="110" r="9"/><circle cx="113" cy="110" r="9"/><path d="M96 110 L104 110"/>
+</g>
+<path d="M88 176 L76 168 L76 184 Z M112 176 L124 168 L124 184 Z" fill="url(#glow)" opacity=".5"/>
+<path d="M100 178 L80 240 M100 178 L120 240" fill="none" stroke="url(#glow)" stroke-width="2.5" stroke-linecap="round" opacity=".55"/></g>
+</svg>

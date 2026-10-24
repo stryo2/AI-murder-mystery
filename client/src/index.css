@@ -9,6 +9,10 @@
   --border: #3d352c;
   --error: #e08a7a;
 
+  /* Headings: 1930s display serif. Labels: typewriter, like a case file. Body: Georgia. */
+  --display: 'Playfair Display', Georgia, serif;
+  --typewriter: 'Special Elite', 'Courier New', monospace;
+
   font-family: Georgia, 'Times New Roman', serif;
   color: var(--text);
   background: var(--bg);
@@ -20,11 +24,93 @@
 
 body {
   margin: 0;
+  background: var(--bg);
+}
+
+/* Atmosphere, drawn over everything and ignored by the mouse:
+   a dark vignette at the edges, and film grain (SVG noise, no image file). */
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+}
+
+body::before {
+  background: radial-gradient(ellipse at center, transparent 55%, rgb(0 0 0 / 0.55) 100%);
+}
+
+body::after {
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Every photo gets the same grade, so pictures from different sources read as one set. */
+.photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: sepia(0.85) saturate(0.6) contrast(1.1) brightness(0.55);
+}
+
+.focus-top {
+  object-position: center 20%;
+}
+
+.focus-bottom {
+  object-position: center 80%;
+}
+
+/* One-colour icons: the SVG is a mask, the colour comes from CSS. */
+.icon {
+  flex: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  background: var(--accent);
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+  opacity: 0.85;
+}
+
+.portrait {
+  flex: none;
+  display: block;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.portrait.large {
+  width: 96px;
+  height: 115px;
+}
+
+.portrait.small {
+  width: 48px;
+  height: 58px;
 }
 
 .status {
   padding: 2rem;
   text-align: center;
+  color: var(--muted);
+}
+
+/* Typewriter labels */
+.eyebrow,
+.speaker,
+.card-count,
+.witness-heading,
+.place h2,
+.briefing-note h2,
+.evidence-tag {
+  font-family: var(--typewriter);
+  font-weight: normal;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--muted);
 }
 
@@ -39,21 +125,26 @@ body {
 
 .chat-header {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 1rem;
+  align-items: center;
+  gap: 0.85rem;
   padding: 1rem 1rem 0.75rem;
   border-bottom: 1px solid var(--border);
 }
 
+.chat-title {
+  flex: 1;
+  min-width: 0;
+}
+
 .chat-header h1 {
   margin: 0;
+  font-family: var(--display);
   font-size: 1.5rem;
   color: var(--accent);
 }
 
 .chat-header p {
-  margin: 0.25rem 0 0;
+  margin: 0.15rem 0 0;
   color: var(--muted);
   font-style: italic;
 }
@@ -101,9 +192,6 @@ body {
 .speaker {
   display: block;
   font-size: 0.75rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--muted);
   margin-bottom: 0.2rem;
 }
 
@@ -179,26 +267,57 @@ button.secondary {
   white-space: nowrap;
 }
 
-/* Briefing: a single centred column, like a page from a case file. */
+/* Briefing: a full-width night photo with the title on it, then the case file below. */
 .briefing {
+  line-height: 1.6;
+  padding-bottom: 4rem;
+}
+
+.briefing-hero {
+  position: relative;
+  height: min(55vh, 460px);
+  overflow: hidden;
+}
+
+/* Fade the photo into the page so there is no hard edge. */
+.briefing-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 35%, var(--bg) 100%);
+}
+
+.briefing-title {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  bottom: 0;
   max-width: 640px;
   margin: 0 auto;
-  padding: 3rem 1rem 4rem;
-  line-height: 1.6;
+  padding: 0 1rem 0.5rem;
+  animation: rise 1.2s ease-out both;
+}
+
+.briefing h1 {
+  margin: 0.4rem 0 0;
+  font-family: var(--display);
+  font-size: clamp(2.4rem, 8vw, 3.6rem);
+  line-height: 1.1;
+  color: var(--accent);
+  text-shadow: 0 2px 18px rgb(0 0 0 / 0.8);
+}
+
+.briefing-body {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 1rem 1rem 0;
+  animation: rise 1.2s 0.3s ease-out both;
 }
 
 .eyebrow {
   margin: 0;
   font-size: 0.8rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-.briefing h1 {
-  margin: 0.4rem 0 1.5rem;
-  font-size: 2.4rem;
-  color: var(--accent);
 }
 
 .synopsis {
@@ -217,9 +336,6 @@ button.secondary {
 .briefing-note h2 {
   margin: 0 0 0.5rem;
   font-size: 0.8rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
 }
 
 .briefing-note p {
@@ -229,6 +345,24 @@ button.secondary {
 button.begin {
   padding: 0.7rem 1.5rem;
   font-size: 1.05rem;
+}
+
+.credits {
+  margin-top: 3rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+  opacity: 0.7;
+}
+
+.credits a {
+  color: inherit;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
 }
 
 /* Suspect picker */
@@ -251,7 +385,8 @@ button.begin {
 
 .picker-header h1 {
   margin: 0;
-  font-size: 1.5rem;
+  font-family: var(--display);
+  font-size: 1.6rem;
   color: var(--accent);
 }
 
@@ -261,8 +396,14 @@ button.begin {
   font-style: italic;
 }
 
+.picker-header .eyebrow {
+  font-style: normal;
+  margin: 0 0 0.2rem;
+}
+
 .header-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
 }
 
@@ -276,7 +417,7 @@ button.begin {
 }
 
 .suspect-grid {
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 380px), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 400px), 1fr));
 }
 
 .witness-list {
@@ -288,8 +429,8 @@ button.begin {
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
+  align-items: flex-start;
+  gap: 1rem;
   text-align: left;
   color: var(--text);
   background: var(--panel);
@@ -298,21 +439,45 @@ button.begin {
   padding: 1rem;
   transition:
     border-color 0.15s,
-    transform 0.15s;
+    transform 0.15s,
+    box-shadow 0.15s;
 }
 
 .suspect-card:hover,
 .witness-card:hover {
   border-color: var(--accent);
   transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgb(201 164 92 / 0.12);
+}
+
+.suspect-card .portrait,
+.witness-card .portrait {
+  transition: filter 0.2s;
+  filter: brightness(0.85);
+}
+
+.suspect-card:hover .portrait,
+.witness-card:hover .portrait {
+  filter: brightness(1.15);
 }
 
 .witness-card {
   padding: 0.75rem;
+  gap: 0.75rem;
+}
+
+.card-text {
+  flex: 1;
+  min-width: 0;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
 }
 
 .card-name {
-  font-size: 1.15rem;
+  font-family: var(--display);
+  font-size: 1.2rem;
   color: var(--accent);
 }
 
@@ -335,34 +500,64 @@ button.begin {
   margin-top: auto;
   padding-top: 0.25rem;
   font-size: 0.75rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--muted);
 }
 
 .witness-heading {
   margin: 2rem 0 0.75rem;
   font-size: 0.8rem;
-  font-weight: normal;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
 }
 
 /* Search the train */
 .scene {
   max-width: 760px;
   margin: 0 auto;
-  padding: 1rem 1rem 3rem;
+  padding: 0 1rem 3rem;
+}
+
+/* The corridor photo runs behind the top of the page and fades out. */
+.banner {
+  position: relative;
+  height: 180px;
+  margin: 0 -1rem -4.5rem;
+  overflow: hidden;
+}
+
+.banner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 20%, var(--bg) 100%);
+}
+
+.scene .picker-header {
+  position: relative;
+  padding-top: 1rem;
+}
+
+.place-header {
+  position: relative;
+  height: 84px;
+  margin: 1.5rem 0 0.6rem;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.place-header::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgb(20 17 14 / 0.9) 15%, transparent 75%);
 }
 
 .place h2 {
-  margin: 1.5rem 0 0.6rem;
-  font-size: 0.8rem;
-  font-weight: normal;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
+  position: absolute;
+  z-index: 1;
+  left: 1rem;
+  bottom: 0.65rem;
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text);
 }
 
 .scene-items {
@@ -402,16 +597,25 @@ button.scene-item:hover:not(:disabled) {
 }
 
 .evidence {
-  padding: 0.75rem 1rem;
+  display: flex;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
   border-left: 3px solid var(--accent);
   background: var(--suspect);
   border-radius: 4px;
   line-height: 1.45;
+  animation: rise 0.5s ease-out both;
+}
+
+.evidence-tag {
+  margin: 0;
+  font-size: 0.7rem;
 }
 
 .evidence h3 {
-  margin: 0;
-  font-size: 1.05rem;
+  margin: 0.1rem 0 0;
+  font-family: var(--display);
+  font-size: 1.1rem;
   font-weight: normal;
   color: var(--accent);
 }
@@ -430,4 +634,25 @@ button.scene-item:hover:not(:disabled) {
 
 .evidence li + li {
   margin-top: 0.3rem;
+}
+
+@media (max-width: 480px) {
+  .portrait.large {
+    width: 72px;
+    height: 86px;
+  }
+
+  .icon {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
 }

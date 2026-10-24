@@ -4,6 +4,7 @@
 
 import { Router } from 'express';
 import type { CaseBriefing } from '@mystery/shared';
+import { assetUrl } from '../data/assets';
 import { caseData } from '../data/case';
 import { toTwelveHourTimes } from '../engine/promptBuilder';
 
@@ -24,6 +25,7 @@ caseRouter.get('/', (_req, res) => {
     synopsis: meta.synopsis,
     playerRole: player.role,
     briefing: toTwelveHourTimes(player.briefing),
+    coverImage: assetUrl(meta.art?.cover),
   };
   res.json(body);
 });

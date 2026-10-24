@@ -11,6 +11,8 @@ export interface CharacterSummary {
   age: number | null;
   /** What they told the guard when the body was found. Suspects only. */
   statement?: string;
+  /** Image URL. */
+  portrait?: string;
 }
 
 /** GET /api/case: what the player is told at the start. Public info only. */
@@ -21,6 +23,8 @@ export interface CaseBriefing {
   /** Who the player is and why they are investigating. */
   playerRole: string;
   briefing: string;
+  /** Image URL for the opening screen. */
+  coverImage?: string;
 }
 
 export interface InterrogateRequest {
@@ -59,6 +63,8 @@ export interface EvidenceView {
   name: string;
   foundIn: string;
   contents: string[];
+  /** Image URL. */
+  icon?: string;
 }
 
 export interface SceneItemView {
@@ -71,7 +77,15 @@ export interface SceneItemView {
 
 /** GET /api/scene: every searchable spot, grouped by place, with this game's progress. */
 export interface SceneResponse {
-  locations: { id: string; name: string; items: SceneItemView[] }[];
+  /** Image URL for the top of the search screen. */
+  bannerImage?: string;
+  locations: {
+    id: string;
+    name: string;
+    image?: string;
+    imageFocus?: 'top' | 'bottom';
+    items: SceneItemView[];
+  }[];
 }
 
 export interface SearchRequest {

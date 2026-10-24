@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from 
 import type { CharacterSummary, ConversationMessage } from '@mystery/shared';
 import { api } from '../api/client';
 import { firstName as getFirstName } from '../names';
+import { Portrait } from './Art';
 
 interface Message extends ConversationMessage {
   id: number;
@@ -98,7 +99,8 @@ export function Chat({ character, sessionId, onBack }: ChatProps) {
   return (
     <section className="chat">
       <header className="chat-header">
-        <div>
+        <Portrait src={character.portrait} size="small" />
+        <div className="chat-title">
           <h1>{character.name}</h1>
           <p>{character.role}</p>
         </div>

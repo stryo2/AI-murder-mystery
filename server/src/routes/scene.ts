@@ -17,6 +17,7 @@ import type {
   SceneResponse,
   SearchResponse,
 } from '@mystery/shared';
+import { assetUrl } from '../data/assets';
 import { caseData } from '../data/case';
 import { toTwelveHourTimes } from '../engine/promptBuilder';
 import { getSearchedItems, markSearched, SESSION_ID } from '../sessions/sessionStore';
@@ -34,9 +35,17 @@ sceneRouter.get('/', (req, res) => {
   const locations = caseData.locations.flatMap((place) => {
     const items = caseData.sceneItems.filter((i) => i.locationId === place.id);
     if (!items.length) return [];
-    return [{ id: place.id, name: place.name, items: items.map((i) => view(i, searched)) }];
+    return [
+      {
+        id: place.id,
+        name: place.name,
+        image: assetUrl(place.image),
+        imageFocus: place.imageFocus,
+        items: items.map((i) => view(i, searched)),
+      },
+    ];
   });
-  res.json({ locations } satisfies SceneResponse);
+  res.json({ bannerImage: assetUrl(caseData.meta.art?.search), locations } satisfies SceneResponse);
 });
 
 sceneRouter.post('/search', (req, res) => {
@@ -72,6 +81,7 @@ function evidenceView(e: Evidence): EvidenceView {
     name: toTwelveHourTimes(e.name),
     foundIn: toTwelveHourTimes(e.foundIn),
     contents: e.contents.map(toTwelveHourTimes),
+    icon: assetUrl(e.icon),
   };
 }
 

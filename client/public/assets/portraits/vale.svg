@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" role="img">
+<defs>
+<radialGradient id="glow" cx="50%" cy="38%" r="70%">
+<stop offset="0" stop-color="#8a6a36"/><stop offset=".45" stop-color="#4a3a22"/><stop offset="1" stop-color="#16120e"/>
+</radialGradient>
+</defs>
+<rect width="200" height="240" fill="url(#glow)"/>
+<g fill="#0c0a08" transform="translate(100 252) scale(1.28) translate(-100 -240)">
+<path d="M22 240 C26 208 52 172 100 168
+C148 172 174 208 178 240 Z"/>
+<path d="M30 240 C40 196 70 178 100 186 C130 178 160 196 170 240 Z"/>
+<path d="M90 130 L88 172 L112 172 L110 130 Z"/>
+<ellipse cx="100" cy="116" rx="26" ry="33"/>
+<path d="M72 112 C68 86 82 78 100 78 C118 78 132 86 128 112 C120 96 80 96 72 112 Z"/>
+<ellipse cx="100" cy="72" rx="15" ry="12"/>
+<g fill="none" stroke="#e8c987" stroke-width="2" opacity=".85">
+<ellipse cx="90" cy="118" rx="7" ry="6"/><ellipse cx="110" cy="118" rx="7" ry="6"/><path d="M97 118 L103 118"/>
+</g>
+<path d="M58 206 C80 196 120 196 142 206" fill="none" stroke="url(#glow)" stroke-width="2.5" stroke-linecap="round" opacity=".55"/></g>
+</svg>

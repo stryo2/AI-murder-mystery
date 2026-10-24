@@ -10,6 +10,8 @@ export interface CaseMeta {
   setting: string;
   synopsis: string;
   openingState: { time: string; positions: Record<string, string>; notes: string[] };
+  /** Art paths, relative to client/public/assets. */
+  art?: { cover?: string; search?: string };
   [key: string]: unknown;
 }
 
@@ -18,6 +20,10 @@ export interface Location {
   name: string;
   occupantId?: string;
   notes?: string;
+  /** Photo path, relative to client/public/assets. */
+  image?: string;
+  /** Which part of a tall photo to show: "top" or "bottom". Default: centre. */
+  imageFocus?: 'top' | 'bottom';
 }
 
 export interface EscalationStep {
@@ -45,6 +51,8 @@ export interface Character {
   /** For checks and evals only. Never put this in a prompt: the list itself names the secrets. */
   mustNotKnow?: string[];
   relationships?: Record<string, string>;
+  /** Portrait path, relative to client/public/assets. */
+  portrait?: string;
   escalationLadder?: EscalationStep[];
 }
 
@@ -89,6 +97,8 @@ export interface Evidence {
   proves: string;
   doesNotProve: string;
   redHerring: boolean;
+  /** Icon path, relative to client/public/assets. */
+  icon?: string;
   [key: string]: unknown;
 }
 

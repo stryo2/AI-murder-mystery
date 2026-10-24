@@ -4,6 +4,7 @@
 
 import { Router } from 'express';
 import type { CharacterSummary } from '@mystery/shared';
+import { assetUrl } from '../data/assets';
 import { caseData } from '../data/case';
 import { toTwelveHourTimes } from '../engine/promptBuilder';
 
@@ -21,6 +22,7 @@ charactersRouter.get('/', (_req, res) => {
             type: c.type,
             age: c.age,
             statement: c.initialStatement && toTwelveHourTimes(c.initialStatement),
+            portrait: assetUrl(c.portrait),
           },
         ],
   );

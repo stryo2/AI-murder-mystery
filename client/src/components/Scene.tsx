@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { EvidenceView, SceneItemView, SceneResponse } from '@mystery/shared';
 import { api } from '../api/client';
+import { Icon } from './Art';
 
 interface SceneProps {
   sessionId: string;
@@ -42,8 +43,14 @@ export function Scene({ sessionId, onBack }: SceneProps) {
 
   return (
     <section className="scene">
+      {scene?.bannerImage && (
+        <div className="banner" aria-hidden="true">
+          <img className="photo" src={scene.bannerImage} alt="" />
+        </div>
+      )}
       <header className="picker-header">
         <div>
+          <p className="eyebrow">The investigation</p>
           <h1>Search the train</h1>
           <p>
             {foundCount === 0
@@ -65,7 +72,17 @@ export function Scene({ sessionId, onBack }: SceneProps) {
 
       {scene?.locations.map((place) => (
         <div key={place.id} className="place">
-          <h2>{place.name}</h2>
+          <div className="place-header">
+            {place.image && (
+              <img
+                className={`photo focus-${place.imageFocus ?? 'centre'}`}
+                src={place.image}
+                alt=""
+                loading="lazy"
+              />
+            )}
+            <h2>{place.name}</h2>
+          </div>
           <ul className="scene-items">
             {place.items.map((item) => (
               <li key={item.id}>
@@ -113,19 +130,24 @@ function SceneItemRow({ item, searching, disabled, onSearch }: SceneItemRowProps
 function EvidenceCard({ evidence }: { evidence: EvidenceView }) {
   return (
     <article className="evidence">
-      <h3>{evidence.name}</h3>
-      <p className="evidence-where">Found in: {evidence.foundIn}</p>
-      <ul>
-        {evidence.contents.map((line, i) => (
-          <li key={i}>{line}</li>
-        ))}
-      </ul>
+      {evidence.icon && <Icon src={evidence.icon} />}
+      <div>
+        <p className="evidence-tag">Exhibit {evidence.id}</p>
+        <h3>{evidence.name}</h3>
+        <p className="evidence-where">Found in: {evidence.foundIn}</p>
+        <ul>
+          {evidence.contents.map((line, i) => (
+            <li key={i}>{line}</li>
+          ))}
+        </ul>
+      </div>
     </article>
   );
 }
 
 function replaceItem(scene: SceneResponse, item: SceneItemView): SceneResponse {
   return {
+    ...scene,
     locations: scene.locations.map((l) => ({
       ...l,
       items: l.items.map((i) => (i.id === item.id ? item : i)),

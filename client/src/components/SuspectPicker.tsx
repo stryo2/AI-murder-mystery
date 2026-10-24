@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { CharacterSummary } from '@mystery/shared';
 import { api } from '../api/client';
+import { Portrait } from './Art';
 
 interface SuspectPickerProps {
   characters: CharacterSummary[];
@@ -48,13 +49,16 @@ export function SuspectPicker({
         {suspects.map((c) => (
           <li key={c.id}>
             <button type="button" className="suspect-card" onClick={() => onPick(c.id)}>
-              <span className="card-name">{c.name}</span>
-              <span className="card-role">
-                {c.role}
-                {c.age !== null && `, ${c.age}`}
+              <Portrait src={c.portrait} size="large" />
+              <span className="card-text">
+                <span className="card-name">{c.name}</span>
+                <span className="card-role">
+                  {c.role}
+                  {c.age !== null && `, ${c.age}`}
+                </span>
+                {c.statement && <q className="card-statement">{c.statement}</q>}
+                <CountLabel count={questionCounts[c.id]} />
               </span>
-              {c.statement && <q className="card-statement">{c.statement}</q>}
-              <CountLabel count={questionCounts[c.id]} />
             </button>
           </li>
         ))}
@@ -67,9 +71,12 @@ export function SuspectPicker({
             {witnesses.map((c) => (
               <li key={c.id}>
                 <button type="button" className="witness-card" onClick={() => onPick(c.id)}>
-                  <span className="card-name">{c.name}</span>
-                  <span className="card-role">{c.role}</span>
-                  <CountLabel count={questionCounts[c.id]} />
+                  <Portrait src={c.portrait} size="small" />
+                  <span className="card-text">
+                    <span className="card-name">{c.name}</span>
+                    <span className="card-role">{c.role}</span>
+                    <CountLabel count={questionCounts[c.id]} />
+                  </span>
                 </button>
               </li>
             ))}

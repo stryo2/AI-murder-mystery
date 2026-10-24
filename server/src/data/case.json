@@ -32,6 +32,10 @@
         "Hale watches the corridor from the station.",
         "C1 is shut and untouched apart from Dr Vale's examination."
       ]
+    },
+    "art": {
+      "cover": "places/briefing-night-yard.webp",
+      "search": "places/corridor.webp"
     }
   },
   "solution": {
@@ -87,31 +91,38 @@
       "id": "C1",
       "name": "Arthur's compartment",
       "occupantId": "arthur",
-      "notes": "Desk, leather document case, brandy flask, glass, service bell. Closest to the station, about three paces away; faces C2"
+      "notes": "Desk, leather document case, brandy flask, glass, service bell. Closest to the station, about three paces away; faces C2",
+      "image": "places/compartment-velvet.webp"
     },
     {
       "id": "C2",
       "name": "Eleanor's compartment",
       "occupantId": "eleanor",
-      "notes": "Directly opposite C1, closest to the station"
+      "notes": "Directly opposite C1, closest to the station",
+      "image": "places/compartment-bunks.webp",
+      "imageFocus": "top"
     },
     {
       "id": "C3",
       "name": "Daniel's compartment",
       "occupantId": "daniel",
-      "notes": "Rear end of the corridor, facing C5; his suitcase is here. The window latch is stiff and will not open"
+      "notes": "Rear end of the corridor, facing C5; his suitcase is here. The window latch is stiff and will not open",
+      "image": "places/compartment-carriage.webp"
     },
     {
       "id": "C4",
       "name": "Samuel's compartment",
       "occupantId": "samuel",
-      "notes": "Middle of the corridor; his medical bag is here"
+      "notes": "Middle of the corridor; his medical bag is here",
+      "image": "places/compartment-first-aid.webp"
     },
     {
       "id": "C5",
       "name": "Maya's compartment",
       "occupantId": "maya",
-      "notes": "Rear end of the corridor, facing C3"
+      "notes": "Rear end of the corridor, facing C3",
+      "image": "places/compartment-bunks.webp",
+      "imageFocus": "bottom"
     },
     {
       "id": "COR",
@@ -123,7 +134,9 @@
       "id": "STN",
       "name": "Attendant's station",
       "occupantId": "hale",
-      "notes": "At the dining-car end of the corridor; holds the service log, bell panel and pantry tray"
+      "notes": "At the dining-car end of the corridor; holds the service log, bell panel and pantry tray",
+      "image": "places/station-porter.webp",
+      "imageFocus": "top"
     },
     {
       "id": "DIN",
@@ -186,7 +199,8 @@
         "samuel": "Trusts him; old family friend",
         "maya": "Contempt: \"that newspaper woman\""
       },
-      "reasonForTravel": "Travels as his wife, as she always does."
+      "reasonForTravel": "Travels as his wife, as she always does.",
+      "portrait": "portraits/eleanor.svg"
     },
     {
       "id": "daniel",
@@ -260,7 +274,8 @@
         "samuel": "Cordial, distant",
         "maya": "Wary; knows she is digging into the company"
       },
-      "reasonForTravel": "Attending the board meeting. Arthur's partner for 11 years."
+      "reasonForTravel": "Attending the board meeting. Arthur's partner for 11 years.",
+      "portrait": "portraits/daniel.svg"
     },
     {
       "id": "samuel",
@@ -292,7 +307,8 @@
         "daniel": "Finds him slippery",
         "maya": "Indifferent; dislikes the press"
       },
-      "reasonForTravel": "Arthur invited him personally, saying they would \"discuss the matter of my letter on the way.\" Samuel came hoping to talk Arthur out of reporting him."
+      "reasonForTravel": "Arthur invited him personally, saying they would \"discuss the matter of my letter on the way.\" Samuel came hoping to talk Arthur out of reporting him.",
+      "portrait": "portraits/samuel.svg"
     },
     {
       "id": "maya",
@@ -326,7 +342,8 @@
         "daniel": "Her prime suspect for the fraud (she never says why)",
         "samuel": "Thinks he is hiding something"
       },
-      "reasonForTravel": "Not in Arthur's party. She booked C5 on purpose to corner him, and at coffee sat down at his table uninvited."
+      "reasonForTravel": "Not in Arthur's party. She booked C5 on purpose to corner him, and at coffee sat down at his table uninvited.",
+      "portrait": "portraits/maya.svg"
     },
     {
       "id": "hale",
@@ -346,7 +363,8 @@
         "Has worked for the railway for 14 years and had never met Arthur before tonight.",
         "If asked about walking back from C1 at 21:40: his back was to the corridor for perhaps two seconds; no door clicked behind him; the first click he heard was C3's, which is why he looked up."
       ],
-      "mustNotKnow": ["what happened inside C1 during Daniel's visit", "anyone's motives"]
+      "mustNotKnow": ["what happened inside C1 during Daniel's visit", "anyone's motives"],
+      "portrait": "portraits/hale.svg"
     },
     {
       "id": "vale",
@@ -364,7 +382,8 @@
         "Cannot identify the substance on a moving train.",
         "Does not name a culprit."
       ],
-      "mustNotKnow": ["the identity of the poison", "the culprit"]
+      "mustNotKnow": ["the identity of the poison", "the culprit"],
+      "portrait": "portraits/vale.svg"
     },
     {
       "id": "pryor",
@@ -381,7 +400,8 @@
         "Knows nothing about Arthur or the suspects.",
         "Speaks for both herself and Mr Pryor. Mr Pryor is a background character and cannot be questioned."
       ],
-      "mustNotKnow": ["everything about the Blackwood party"]
+      "mustNotKnow": ["everything about the Blackwood party"],
+      "portrait": "portraits/pryor.svg"
     },
     {
       "id": "lamont",
@@ -401,7 +421,8 @@
       "mustNotKnow": [
         "anything that happened in the corridor or the compartments",
         "anyone's motives"
-      ]
+      ],
+      "portrait": "portraits/lamont.svg"
     }
   ],
   "events": [
@@ -2553,7 +2574,8 @@
       "revealsFactIds": ["f_samuel_exam"],
       "proves": "Arthur was alive and well at 21:16; Samuel's visit was before the safe drink.",
       "doesNotProve": "Anything about the cause of death.",
-      "redHerring": false
+      "redHerring": false,
+      "icon": "icons/stethoscope.svg"
     },
     {
       "id": "E2",
@@ -2575,7 +2597,8 @@
       ],
       "proves": "With Dr Vale's assessment, poisoning is likely and the poison was in the flask. The wax fragment is a physical trace of whatever was added.",
       "doesNotProve": "Who added it.",
-      "redHerring": false
+      "redHerring": false,
+      "icon": "icons/wine-glass.svg"
     },
     {
       "id": "E3",
@@ -2614,7 +2637,8 @@
       },
       "proves": "The flask was safe at 21:39; the access window; Daniel's second visit; Eleanor and Samuel in their compartments. The repeated bell shows Arthur was already in distress at 22:14.",
       "doesNotProve": "What Daniel did inside C1.",
-      "redHerring": false
+      "redHerring": false,
+      "icon": "icons/open-book.svg"
     },
     {
       "id": "E4",
@@ -2635,7 +2659,8 @@
       ],
       "proves": "Daniel's motive, and that Arthur planned to act the next morning.",
       "doesNotProve": "Murder.",
-      "redHerring": false
+      "redHerring": false,
+      "icon": "icons/briefcase.svg"
     },
     {
       "id": "E5",
@@ -2653,7 +2678,8 @@
       ],
       "proves": "Eleanor lied about taking something and had a motive.",
       "doesNotProve": "Anything about the flask.",
-      "redHerring": true
+      "redHerring": true,
+      "icon": "icons/envelope.svg"
     },
     {
       "id": "E6",
@@ -2666,7 +2692,8 @@
       "revealsFactIds": ["f_samuel_letter", "f_samuel_error", "f_samuel_invited"],
       "proves": "Samuel had a motive and hid it.",
       "doesNotProve": "Any contact with the flask after 21:16.",
-      "redHerring": true
+      "redHerring": true,
+      "icon": "icons/scroll-quill.svg"
     },
     {
       "id": "E7",
@@ -2681,7 +2708,8 @@
       "proves": "An independent second witness to Daniel leaving C1 at 21:44.",
       "doesNotProve": "What Daniel did inside. The document explains her secrecy but is not murder evidence.",
       "redHerring": false,
-      "carriedBy": "maya"
+      "carriedBy": "maya",
+      "icon": "icons/notebook.svg"
     },
     {
       "id": "E8",
@@ -2705,7 +2733,8 @@
           "It never leaves the train and is never destroyed."
         ]
       },
-      "locationNote": "Never destroyed and always findable: in C3, or on Daniel's coat after the simulation rule fires."
+      "locationNote": "Never destroyed and always findable: in C3, or on Daniel's coat after the simulation rule fires.",
+      "icon": "icons/vial.svg"
     },
     {
       "id": "X1",
@@ -2717,7 +2746,8 @@
       "revealsFactIds": ["f_no_container_c1"],
       "proves": "Rules out Arthur poisoning himself.",
       "doesNotProve": "Who poisoned him.",
-      "redHerring": false
+      "redHerring": false,
+      "icon": "icons/magnifying-glass.svg"
     }
   ],
   "rules": {
