@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import type { CaseBriefing, CharacterSummary, Verdict } from '@mystery/shared';
 import { api } from './api/client';
 import { Accuse } from './components/Accuse';
 import { Briefing } from './components/Briefing';
+import { CaseFile, type CaseFileTab } from './components/CaseFile';
 import { Chat } from './components/Chat';
 import { Scene } from './components/Scene';
 import { SuspectPicker } from './components/SuspectPicker';
@@ -29,6 +30,17 @@ export function App() {
   const verdict = loaded?.sessionId === sessionId ? loaded.verdict : undefined;
   const setVerdict = (v: Verdict) => setLoaded({ sessionId, verdict: v });
   const [error, setError] = useState<string | null>(null);
+  const [caseFile, setCaseFile] = useState<{ open: boolean; tab: CaseFileTab }>({
+    open: false,
+    tab: 'notes',
+  });
+  /** Bumped after each search so the evidence board reloads. */
+  const [foundVersion, setFoundVersion] = useState(0);
+  const openCaseFile = useCallback(
+    (tab?: CaseFileTab) => setCaseFile((c) => ({ open: true, tab: tab ?? c.tab })),
+    [],
+  );
+  const closeCaseFile = useCallback(() => setCaseFile((c) => ({ ...c, open: false })), []);
 
   useEffect(() => {
     Promise.all([api.briefing(), api.characters()])
@@ -59,6 +71,7 @@ export function App() {
     if (ask && !confirm('Start a new game? Every suspect will forget your conversations.')) return;
     setSessionId(startNewSession());
     setScreen({ name: 'briefing' });
+    closeCaseFile();
     window.scrollTo(0, 0);
   }
 
@@ -74,46 +87,76 @@ export function App() {
     return <p className="status">Boarding the train…</p>;
   }
 
-  if (verdict) return <VerdictScreen verdict={verdict} onNewGame={() => newGame(false)} />;
-  if (screen.name === 'briefing') return <Briefing briefing={briefing} onBegin={begin} />;
-  if (screen.name === 'scene') return <Scene sessionId={sessionId} onBack={toPicker} />;
-  if (screen.name === 'accuse') {
-    return (
-      <Accuse
-        sessionId={sessionId}
-        suspects={characters.filter((c) => c.type === 'suspect')}
-        onBack={toPicker}
-        onVerdict={(v) => {
-          setVerdict(v);
-          window.scrollTo(0, 0);
-        }}
-      />
-    );
-  }
-
-  const chatWith =
-    screen.name === 'chat' ? characters.find((c) => c.id === screen.characterId) : undefined;
-  if (chatWith) {
-    // key: a new character or session remounts the chat, clearing what is on screen.
-    return (
-      <Chat
-        key={`${sessionId}/${chatWith.id}`}
-        character={chatWith}
-        sessionId={sessionId}
-        onBack={toPicker}
-      />
-    );
-  }
-
+  // The case file sits beside every screen except the opening briefing.
+  const showCaseFile = verdict !== null || screen.name !== 'briefing';
   return (
-    <SuspectPicker
-      characters={characters}
-      sessionId={sessionId}
-      onPick={(characterId) => setScreen({ name: 'chat', characterId })}
-      onSearch={() => setScreen({ name: 'scene' })}
-      onAccuse={() => setScreen({ name: 'accuse' })}
-      onBriefing={() => setScreen({ name: 'briefing' })}
-      onNewGame={() => newGame()}
-    />
+    <>
+      {renderScreen()}
+      {showCaseFile && (
+        <CaseFile
+          key={sessionId}
+          sessionId={sessionId}
+          open={caseFile.open}
+          tab={caseFile.tab}
+          onOpen={openCaseFile}
+          onClose={closeCaseFile}
+          foundVersion={foundVersion}
+        />
+      )}
+    </>
   );
+
+  function renderScreen() {
+    if (!briefing || !characters) return null; // narrowed above; repeated for the closure
+    if (verdict) return <VerdictScreen verdict={verdict} onNewGame={() => newGame(false)} />;
+    if (screen.name === 'briefing') return <Briefing briefing={briefing} onBegin={begin} />;
+    if (screen.name === 'scene') {
+      return (
+        <Scene
+          sessionId={sessionId}
+          onBack={toPicker}
+          onSearched={() => setFoundVersion((v) => v + 1)}
+        />
+      );
+    }
+    if (screen.name === 'accuse') {
+      return (
+        <Accuse
+          sessionId={sessionId}
+          suspects={characters.filter((c) => c.type === 'suspect')}
+          onBack={toPicker}
+          onVerdict={(v) => {
+            setVerdict(v);
+            window.scrollTo(0, 0);
+          }}
+        />
+      );
+    }
+
+    const chatWith =
+      screen.name === 'chat' ? characters.find((c) => c.id === screen.characterId) : undefined;
+    if (chatWith) {
+      // key: a new character or session remounts the chat, clearing what is on screen.
+      return (
+        <Chat
+          key={`${sessionId}/${chatWith.id}`}
+          character={chatWith}
+          sessionId={sessionId}
+          onBack={toPicker}
+        />
+      );
+    }
+
+    return (
+      <SuspectPicker
+        characters={characters}
+        sessionId={sessionId}
+        onPick={(characterId) => setScreen({ name: 'chat', characterId })}
+        onSearch={() => setScreen({ name: 'scene' })}
+        onAccuse={() => setScreen({ name: 'accuse' })}
+        onBriefing={() => setScreen({ name: 'briefing' })}
+        onNewGame={() => newGame()}
+      />
+    );
+  }
 }

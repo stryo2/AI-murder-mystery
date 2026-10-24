@@ -6,10 +6,12 @@ import { Icon } from './Art';
 interface SceneProps {
   sessionId: string;
   onBack: () => void;
+  /** Called after each search, so other views of the evidence can refresh. */
+  onSearched?: () => void;
 }
 
 /** Every searchable spot on the train, grouped by place. Searching one reveals its evidence. */
-export function Scene({ sessionId, onBack }: SceneProps) {
+export function Scene({ sessionId, onBack, onSearched }: SceneProps) {
   const [scene, setScene] = useState<SceneResponse | null>(null);
   const [searching, setSearching] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -31,6 +33,7 @@ export function Scene({ sessionId, onBack }: SceneProps) {
     try {
       const found = await api.search({ sessionId, itemId });
       setScene((s) => s && replaceItem(s, found));
+      onSearched?.();
     } catch (err) {
       setError((err as Error).message);
     } finally {

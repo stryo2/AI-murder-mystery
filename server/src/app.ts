@@ -4,6 +4,7 @@ import { caseRouter } from './routes/case';
 import { charactersRouter } from './routes/characters';
 import { healthRouter } from './routes/health';
 import { interrogateRouter } from './routes/interrogate';
+import { notebookRouter } from './routes/notebook';
 import { sceneRouter } from './routes/scene';
 
 export function createApp() {
@@ -15,6 +16,7 @@ export function createApp() {
   app.use('/api/case', caseRouter);
   app.use('/api/characters', charactersRouter);
   app.use('/api/interrogate', interrogateRouter);
+  app.use('/api/notebook', notebookRouter);
   app.use('/api/scene', sceneRouter);
 
   return app;

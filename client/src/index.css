@@ -894,3 +894,225 @@ button.accuse-button {
 .cleared p {
   margin: 0.25rem 0 0;
 }
+
+/* Case file: a side panel with the notebook and the evidence board. */
+:root {
+  --case-file-width: 420px;
+}
+
+.case-file {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  right: 0;
+  width: min(var(--case-file-width), 100vw);
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: #15120f;
+  border-left: 1px solid var(--border);
+  box-shadow: -12px 0 40px rgb(0 0 0 / 0.5);
+  transform: translateX(100%);
+  visibility: hidden;
+  transition:
+    transform 0.3s ease,
+    visibility 0s 0.3s;
+}
+
+.case-file.open {
+  transform: none;
+  visibility: visible;
+  transition: transform 0.3s ease;
+}
+
+/* Wide screens: the page moves over so the panel sits beside it, not on top of it. */
+@media (min-width: 1180px) {
+  body.case-file-open {
+    padding-right: var(--case-file-width);
+  }
+}
+
+/* The tab on the right edge that opens the panel. */
+button.case-file-tab {
+  position: fixed;
+  z-index: 40;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  writing-mode: vertical-rl;
+  padding: 1rem 0.45rem;
+  font-family: var(--typewriter);
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--accent);
+  border-radius: 6px 0 0 6px;
+  box-shadow: -4px 0 16px rgb(0 0 0 / 0.4);
+}
+
+.case-file-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.case-file-tabs {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.case-file-tabs button {
+  font-family: var(--typewriter);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: transparent;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  padding: 0.4rem 0.6rem;
+}
+
+.case-file-tabs button[aria-selected='true'] {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.case-file-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+/* Notebook: ruled paper, typewriter text. */
+.notebook {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.notebook textarea {
+  flex: 1;
+  min-height: 12rem;
+  resize: none;
+  padding: 0.25rem 0.85rem;
+  font-family: var(--typewriter);
+  font-size: 0.95rem;
+  line-height: 1.75rem;
+  color: #2a241c;
+  background-color: #e9e0cc;
+  background-image: linear-gradient(transparent calc(1.75rem - 1px), #c7b99c 1px);
+  background-size: 100% 1.75rem;
+  background-attachment: local;
+  border: none;
+  border-left: 3px double #b0563f;
+  border-radius: 3px;
+  box-shadow: inset 0 0 30px rgb(80 60 30 / 0.25);
+}
+
+.notebook textarea::placeholder {
+  color: #8c7f68;
+}
+
+.notebook textarea:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.save-status {
+  margin: 0;
+  font-family: var(--typewriter);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+
+button.link {
+  padding: 0;
+  color: var(--accent);
+  background: none;
+  text-decoration: underline;
+}
+
+/* Evidence board: paper cards pinned up at slight angles. */
+.board {
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem 1rem;
+}
+
+button.pinned {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 1.1rem 0.6rem 0.8rem;
+  text-align: center;
+  color: #2a241c;
+  background: #e2d7bf;
+  border-radius: 2px;
+  box-shadow: 0 6px 14px rgb(0 0 0 / 0.45);
+  transform: rotate(-1.5deg);
+  transition: transform 0.15s;
+}
+
+.board li:nth-child(even) button.pinned {
+  transform: rotate(1.8deg);
+}
+
+.board li:nth-child(3n) button.pinned {
+  transform: rotate(-0.6deg);
+}
+
+.board li button.pinned:hover {
+  transform: rotate(0) scale(1.04);
+}
+
+/* The pin */
+button.pinned::before {
+  content: '';
+  position: absolute;
+  top: 0.35rem;
+  left: 50%;
+  width: 0.7rem;
+  height: 0.7rem;
+  margin-left: -0.35rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #e07a62, #8a2a1c);
+  box-shadow: 0 2px 3px rgb(0 0 0 / 0.5);
+}
+
+button.pinned .icon {
+  width: 2.25rem;
+  height: 2.25rem;
+  background: #4a3b26;
+}
+
+button.pinned .evidence-tag {
+  color: #6b5c44;
+}
+
+.pinned-name {
+  font-family: var(--display);
+  font-size: 0.95rem;
+  line-height: 1.25;
+}
+
+.board-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}

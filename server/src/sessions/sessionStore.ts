@@ -1,6 +1,6 @@
 // In-memory game state, per session: conversation history per character, which scene items
-// the player has searched, and the verdict once they accuse someone. Week 3 moves this into
-// Postgres; until then a server restart forgets every game.
+// the player has searched, their notes, and the verdict once they accuse someone.
+// Week 3 moves this into Postgres; until then a server restart forgets every game.
 
 import type { Verdict } from '@mystery/shared';
 import type { ChatMessage } from '../llm';
@@ -25,6 +25,8 @@ interface Session {
   searchedItems: Set<string>;
   /** Set once the player accuses someone; the game is over after that. */
   verdict?: Verdict;
+  /** The player's own notes. */
+  notes: string;
 }
 
 // A Map keeps insertion order; touching a session re-inserts it, so the first key is the oldest.
@@ -36,7 +38,7 @@ function touch(sessionId: string): Session {
   const now = Date.now();
   let session = sessions.get(sessionId);
   if (session && now - session.lastUsed > SESSION_TTL_MS) session = undefined;
-  session ??= { lastUsed: now, conversations: new Map(), searchedItems: new Set() };
+  session ??= { lastUsed: now, conversations: new Map(), searchedItems: new Set(), notes: '' };
   session.lastUsed = now;
   sessions.delete(sessionId);
   sessions.set(sessionId, session);
@@ -94,4 +96,12 @@ export function getVerdict(sessionId: string): Verdict | undefined {
 
 export function setVerdict(sessionId: string, verdict: Verdict) {
   touch(sessionId).verdict = verdict;
+}
+
+export function getNotes(sessionId: string): string {
+  return touch(sessionId).notes;
+}
+
+export function setNotes(sessionId: string, text: string) {
+  touch(sessionId).notes = text;
 }

@@ -133,3 +133,14 @@ export interface Verdict {
 export interface AccusationStatus {
   verdict: Verdict | null;
 }
+
+/** GET /api/notebook: the player's own notes for this game. */
+export interface NotebookResponse {
+  text: string;
+}
+
+/** PUT /api/notebook: replaces the notes. */
+export interface NotebookRequest {
+  sessionId: string;
+  text: string;
+}

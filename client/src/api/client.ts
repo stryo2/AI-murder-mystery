@@ -9,6 +9,8 @@ import type {
   InterrogateRequest,
   InterrogateResponse,
   InterrogateStreamEvent,
+  NotebookRequest,
+  NotebookResponse,
   SceneResponse,
   SearchRequest,
   SearchResponse,
@@ -20,7 +22,11 @@ async function errorFrom(res: Response, label: string): Promise<Error> {
   return new Error(err?.error ?? `${label} failed: ${res.status}`);
 }
 
-async function request<T>(method: 'GET' | 'POST', path: string, body?: unknown): Promise<T> {
+async function request<T>(
+  method: 'GET' | 'POST' | 'PUT',
+  path: string,
+  body?: unknown,
+): Promise<T> {
   const res = await fetch(`/api${path}`, {
     method,
     headers: body ? { 'Content-Type': 'application/json' } : undefined,
@@ -71,6 +77,9 @@ export const api = {
   accusation: (sessionId: string) =>
     request<AccusationStatus>('GET', `/accusation?${new URLSearchParams({ sessionId })}`),
   accuse: (body: AccusationRequest) => request<Verdict>('POST', '/accusation', body),
+  notes: (sessionId: string) =>
+    request<NotebookResponse>('GET', `/notebook?${new URLSearchParams({ sessionId })}`),
+  saveNotes: (body: NotebookRequest) => request<NotebookResponse>('PUT', '/notebook', body),
   characters: () => request<CharacterSummary[]>('GET', '/characters'),
   history: (sessionId: string, characterId: string) =>
     request<HistoryResponse>(
