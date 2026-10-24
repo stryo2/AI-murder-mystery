@@ -1,5 +1,6 @@
 import type {
   ApiError,
+  CaseBriefing,
   CharacterSummary,
   HealthResponse,
   HistoryResponse,
@@ -60,6 +61,7 @@ async function interrogateStream(
 
 export const api = {
   health: () => request<HealthResponse>('GET', '/health'),
+  briefing: () => request<CaseBriefing>('GET', '/case'),
   characters: () => request<CharacterSummary[]>('GET', '/characters'),
   history: (sessionId: string, characterId: string) =>
     request<HistoryResponse>(

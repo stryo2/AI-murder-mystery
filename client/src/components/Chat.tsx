@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from 'react';
 import type { CharacterSummary, ConversationMessage } from '@mystery/shared';
 import { api } from '../api/client';
+import { firstName as getFirstName } from '../names';
 
 interface Message extends ConversationMessage {
   id: number;
@@ -11,10 +12,11 @@ const MAX_QUESTION_LENGTH = 1000; // matches the server's limit
 interface ChatProps {
   character: CharacterSummary;
   sessionId: string;
-  onNewGame: () => void;
+  /** Back to the suspect picker. */
+  onBack: () => void;
 }
 
-export function Chat({ character, sessionId, onNewGame }: ChatProps) {
+export function Chat({ character, sessionId, onBack }: ChatProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(true);
   const [draft, setDraft] = useState('');
@@ -91,7 +93,7 @@ export function Chat({ character, sessionId, onNewGame }: ChatProps) {
     }
   }
 
-  const firstName = character.name.replace(/^(Dr|Mr|Mrs|Miss) /, '').split(' ')[0];
+  const firstName = getFirstName(character.name);
 
   return (
     <section className="chat">
@@ -100,8 +102,9 @@ export function Chat({ character, sessionId, onNewGame }: ChatProps) {
           <h1>{character.name}</h1>
           <p>{character.role}</p>
         </div>
-        <button type="button" className="secondary" onClick={onNewGame} disabled={waiting}>
-          New game
+        {/* Disabled mid-reply: the suspect stays busy until the answer is saved anyway. */}
+        <button type="button" className="secondary" onClick={onBack} disabled={waiting}>
+          ← All suspects
         </button>
       </header>
 

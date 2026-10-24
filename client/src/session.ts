@@ -21,6 +21,25 @@ export function getSessionId(): string {
   return startNewSession();
 }
 
+const BRIEFED_KEY = 'last-stop-briefed';
+
+/** Whether the player has read the briefing in this game (so a reload skips it). */
+export function hasReadBriefing(sessionId: string): boolean {
+  try {
+    return localStorage.getItem(BRIEFED_KEY) === sessionId;
+  } catch {
+    return false;
+  }
+}
+
+export function markBriefingRead(sessionId: string) {
+  try {
+    localStorage.setItem(BRIEFED_KEY, sessionId);
+  } catch {
+    // storage blocked
+  }
+}
+
 export function startNewSession(): string {
   const id = newId();
   try {

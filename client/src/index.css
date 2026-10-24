@@ -178,3 +178,173 @@ button.secondary {
   font-size: 0.85rem;
   white-space: nowrap;
 }
+
+/* Briefing: a single centred column, like a page from a case file. */
+.briefing {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 3rem 1rem 4rem;
+  line-height: 1.6;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.briefing h1 {
+  margin: 0.4rem 0 1.5rem;
+  font-size: 2.4rem;
+  color: var(--accent);
+}
+
+.synopsis {
+  font-size: 1.1rem;
+}
+
+.briefing-note {
+  margin: 2rem 0;
+  padding: 1rem 1.25rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 6px;
+}
+
+.briefing-note h2 {
+  margin: 0 0 0.5rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.briefing-note p {
+  margin: 0.5rem 0 0;
+}
+
+button.begin {
+  padding: 0.7rem 1.5rem;
+  font-size: 1.05rem;
+}
+
+/* Suspect picker */
+.picker {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1rem 1rem 3rem;
+}
+
+.picker-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.picker-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--accent);
+}
+
+.picker-header p {
+  margin: 0.25rem 0 0;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.header-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.suspect-grid,
+.witness-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.suspect-grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 380px), 1fr));
+}
+
+.witness-list {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr));
+}
+
+.suspect-card,
+.witness-card {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  text-align: left;
+  color: var(--text);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  transition:
+    border-color 0.15s,
+    transform 0.15s;
+}
+
+.suspect-card:hover,
+.witness-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.witness-card {
+  padding: 0.75rem;
+}
+
+.card-name {
+  font-size: 1.15rem;
+  color: var(--accent);
+}
+
+.witness-card .card-name {
+  font-size: 1rem;
+}
+
+.card-role {
+  color: var(--muted);
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+.card-statement {
+  margin: 0.4rem 0;
+  line-height: 1.45;
+}
+
+.card-count {
+  margin-top: auto;
+  padding-top: 0.25rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.witness-heading {
+  margin: 2rem 0 0.75rem;
+  font-size: 0.8rem;
+  font-weight: normal;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}

@@ -8,6 +8,19 @@ export interface CharacterSummary {
   name: string;
   role: string;
   type: 'suspect' | 'witness';
+  age: number | null;
+  /** What they told the guard when the body was found. Suspects only. */
+  statement?: string;
+}
+
+/** GET /api/case: what the player is told at the start. Public info only. */
+export interface CaseBriefing {
+  title: string;
+  setting: string;
+  synopsis: string;
+  /** Who the player is and why they are investigating. */
+  playerRole: string;
+  briefing: string;
 }
 
 export interface InterrogateRequest {

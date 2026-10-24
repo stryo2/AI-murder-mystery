@@ -1,38 +1,73 @@
 import { useEffect, useState } from 'react';
-import type { CharacterSummary } from '@mystery/shared';
+import type { CaseBriefing, CharacterSummary } from '@mystery/shared';
 import { api } from './api/client';
+import { Briefing } from './components/Briefing';
 import { Chat } from './components/Chat';
-import { getSessionId, startNewSession } from './session';
+import { SuspectPicker } from './components/SuspectPicker';
+import { getSessionId, hasReadBriefing, markBriefingRead, startNewSession } from './session';
 
-// Week 1: one suspect. Pick another for testing with ?suspect=hale.
-// Week 2 replaces this with suspect picker cards.
-const DEFAULT_SUSPECT = 'daniel';
+type Screen = { name: 'briefing' } | { name: 'picker' } | { name: 'chat'; characterId: string };
 
 export function App() {
-  const [character, setCharacter] = useState<CharacterSummary | null>(null);
-  const [error, setError] = useState<string | null>(null);
   const [sessionId, setSessionId] = useState(getSessionId);
-
-  function newGame() {
-    if (confirm('Start a new game? Every suspect will forget this conversation.')) {
-      setSessionId(startNewSession());
-    }
-  }
+  const [screen, setScreen] = useState<Screen>(() =>
+    hasReadBriefing(sessionId) ? { name: 'picker' } : { name: 'briefing' },
+  );
+  const [briefing, setBriefing] = useState<CaseBriefing | null>(null);
+  const [characters, setCharacters] = useState<CharacterSummary[] | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const wanted = new URLSearchParams(location.search).get('suspect') ?? DEFAULT_SUSPECT;
-    api
-      .characters()
-      .then((all) => {
-        const found = all.find((c) => c.id === wanted);
-        if (found) setCharacter(found);
-        else setError(`No one called "${wanted}" is aboard.`);
+    Promise.all([api.briefing(), api.characters()])
+      .then(([b, c]) => {
+        setBriefing(b);
+        setCharacters(c);
       })
       .catch(() => setError('Cannot reach the server. Is it running?'));
   }, []);
 
+  useEffect(() => {
+    if (briefing) document.title = briefing.title;
+  }, [briefing]);
+
+  function newGame() {
+    if (confirm('Start a new game? Every suspect will forget your conversations.')) {
+      setSessionId(startNewSession());
+      setScreen({ name: 'briefing' });
+    }
+  }
+
+  function begin() {
+    markBriefingRead(sessionId);
+    setScreen({ name: 'picker' });
+  }
+
   if (error) return <p className="status">{error}</p>;
-  if (!character) return <p className="status">Boarding the train…</p>;
-  // key: a new session remounts the chat, clearing what is on screen.
-  return <Chat key={sessionId} character={character} sessionId={sessionId} onNewGame={newGame} />;
+  if (!briefing || !characters) return <p className="status">Boarding the train…</p>;
+
+  if (screen.name === 'briefing') return <Briefing briefing={briefing} onBegin={begin} />;
+
+  const chatWith =
+    screen.name === 'chat' ? characters.find((c) => c.id === screen.characterId) : undefined;
+  if (chatWith) {
+    // key: a new character or session remounts the chat, clearing what is on screen.
+    return (
+      <Chat
+        key={`${sessionId}/${chatWith.id}`}
+        character={chatWith}
+        sessionId={sessionId}
+        onBack={() => setScreen({ name: 'picker' })}
+      />
+    );
+  }
+
+  return (
+    <SuspectPicker
+      characters={characters}
+      sessionId={sessionId}
+      onPick={(characterId) => setScreen({ name: 'chat', characterId })}
+      onBriefing={() => setScreen({ name: 'briefing' })}
+      onNewGame={newGame}
+    />
+  );
 }
