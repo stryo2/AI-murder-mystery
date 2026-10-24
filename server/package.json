@@ -7,7 +7,9 @@
     "dev": "tsx watch src/index.ts",
     "build": "tsup",
     "start": "node dist/index.js",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "llm:smoke": "tsx scripts/llm-smoke.ts",
+    "prompt": "tsx scripts/prompt.ts"
   },
   "dependencies": {
     "express": "^5.3.0"
