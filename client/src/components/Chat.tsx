@@ -19,6 +19,8 @@ export function Chat({ character, sessionId, onNewGame }: ChatProps) {
   const [loading, setLoading] = useState(true);
   const [draft, setDraft] = useState('');
   const [waiting, setWaiting] = useState(false);
+  /** The reply as it streams in; '' until the first piece arrives. */
+  const [streaming, setStreaming] = useState('');
   const [error, setError] = useState<{ text: string; question: string } | null>(null);
   const nextId = useRef(1);
   const listEnd = useRef<HTMLDivElement>(null);
@@ -48,7 +50,7 @@ export function Chat({ character, sessionId, onNewGame }: ChatProps) {
   // Keep the newest message in view.
   useEffect(() => {
     listEnd.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
-  }, [messages, waiting, error]);
+  }, [messages, waiting, streaming, error]);
 
   const add = (from: Message['from'], text: string) =>
     setMessages((m) => [...m, { id: nextId.current++, from, text }]);
@@ -58,11 +60,16 @@ export function Chat({ character, sessionId, onNewGame }: ChatProps) {
     setError(null);
     setWaiting(true);
     try {
-      const res = await api.interrogate({ sessionId, characterId: character.id, question });
-      add('suspect', res.reply);
+      const reply = await api.interrogateStream(
+        { sessionId, characterId: character.id, question },
+        (piece) => setStreaming((s) => s + piece),
+      );
+      add('suspect', reply);
     } catch (err) {
+      // A half-written reply was not saved by the server, so drop it from the screen too.
       setError({ text: (err as Error).message, question });
     } finally {
+      setStreaming('');
       setWaiting(false);
       input.current?.focus();
     }
@@ -110,9 +117,9 @@ export function Chat({ character, sessionId, onNewGame }: ChatProps) {
           </div>
         ))}
         {waiting && (
-          <div className="message suspect thinking">
+          <div className={`message suspect${streaming ? '' : ' thinking'}`}>
             <span className="speaker">{firstName}</span>
-            <p>…</p>
+            <p>{streaming || '…'}</p>
           </div>
         )}
         {error && (

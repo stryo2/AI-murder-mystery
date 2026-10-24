@@ -1,5 +1,6 @@
 // callModel(): the one function the rest of the server uses to talk to an LLM.
 // Adds a per-attempt timeout, retries with backoff, and logs every call.
+// Pass onText to stream the reply piece by piece.
 
 import { env } from '../config/env';
 import { logLlmCall } from './logger';
@@ -30,6 +31,17 @@ export async function callModel(opts: CallModelOptions): Promise<ModelResult> {
   const maxRetries = opts.maxRetries ?? DEFAULT_MAX_RETRIES;
   const start = Date.now();
   let attempts = 0;
+  let firstTextMs: number | undefined;
+  // Once any text has reached the caller, a retry would show the player a second, different
+  // answer, so a stream that fails part-way is not retried.
+  let sentText = false;
+  const onText =
+    opts.onText &&
+    ((piece: string) => {
+      if (!sentText) firstTextMs = Date.now() - start;
+      sentText = true;
+      opts.onText!(piece);
+    });
 
   const log = (fields: { ok: boolean; result?: ModelResult; error?: string }) =>
     logLlmCall({
@@ -45,6 +57,8 @@ export async function callModel(opts: CallModelOptions): Promise<ModelResult> {
       response: fields.result?.text,
       finishReason: fields.result?.finishReason,
       usage: fields.result?.usage,
+      streamed: Boolean(onText),
+      firstTextMs,
       error: fields.error,
     });
 
@@ -62,23 +76,24 @@ export async function callModel(opts: CallModelOptions): Promise<ModelResult> {
       const signal = opts.signal ? AbortSignal.any([opts.signal, timeout]) : timeout;
 
       try {
-        const res = await provider.generate(
-          {
-            model,
-            system: opts.system,
-            messages: opts.messages,
-            temperature: opts.temperature,
-            maxOutputTokens: opts.maxOutputTokens,
-            json: opts.json,
-          },
-          signal,
-        );
+        const req = {
+          model,
+          system: opts.system,
+          messages: opts.messages,
+          temperature: opts.temperature,
+          maxOutputTokens: opts.maxOutputTokens,
+          json: opts.json,
+        };
+        const res = onText
+          ? await provider.generateStream(req, signal, onText)
+          : await provider.generate(req, signal);
         const result: ModelResult = {
           ...res,
           provider: provider.name,
           model,
           latencyMs: Date.now() - start,
           attempts,
+          firstTextMs,
         };
         await log({ ok: true, result });
         return result;
@@ -92,6 +107,7 @@ export async function callModel(opts: CallModelOptions): Promise<ModelResult> {
           : rawErr;
 
         if (!(err instanceof LlmError) || !err.opts.retryable || attempts > maxRetries) throw err;
+        if (sentText) throw err;
 
         // Exponential backoff with jitter: ~1s, ~2s, ~4s... or the server's own hint.
         const backoff = BASE_BACKOFF_MS * 2 ** (attempts - 1) * (0.5 + Math.random());

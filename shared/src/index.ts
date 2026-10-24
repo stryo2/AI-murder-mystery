@@ -24,6 +24,12 @@ export interface InterrogateResponse {
   reply: string;
 }
 
+/** One line of the POST /api/interrogate/stream response. */
+export type InterrogateStreamEvent =
+  | { type: 'text'; text: string } // the next piece of the reply
+  | { type: 'done'; reply: string } // the full, final reply
+  | { type: 'error'; error: string };
+
 export interface ConversationMessage {
   from: 'player' | 'suspect';
   text: string;

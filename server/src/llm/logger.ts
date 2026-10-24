@@ -22,6 +22,9 @@ export interface LlmLogEntry {
   response?: string;
   finishReason?: string;
   usage?: TokenUsage;
+  streamed?: boolean;
+  /** Streaming only: how long the player waited before text started appearing. */
+  firstTextMs?: number;
   error?: string;
 }
 
@@ -29,9 +32,10 @@ let dirReady: Promise<unknown> | undefined;
 
 export async function logLlmCall(entry: LlmLogEntry): Promise<void> {
   const tokens = entry.usage ? ` ${entry.usage.inputTokens}→${entry.usage.outputTokens} tok` : '';
+  const first = entry.firstTextMs !== undefined ? ` first text ${entry.firstTextMs}ms` : '';
   const status = entry.ok ? 'ok' : `FAILED: ${entry.error}`;
   console.log(
-    `[llm] ${entry.tag ?? '-'} ${entry.model} ${entry.latencyMs}ms x${entry.attempts}${tokens} ${status}`,
+    `[llm] ${entry.tag ?? '-'} ${entry.model} ${entry.latencyMs}ms x${entry.attempts}${first}${tokens} ${status}`,
   );
 
   // Logging must never break a game, so file errors are reported and swallowed.

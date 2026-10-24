@@ -29,6 +29,11 @@ export interface CallModelOptions {
   tag?: string;
   /** Lets the caller cancel (e.g. the player closed the tab). Cancelled calls are not retried. */
   signal?: AbortSignal;
+  /**
+   * Stream the reply: called with each new piece of text as it arrives. The full text is
+   * still returned at the end. Retries only happen before the first piece is sent.
+   */
+  onText?: (text: string) => void;
 }
 
 export interface TokenUsage {
@@ -50,6 +55,8 @@ export interface ModelResult {
   latencyMs: number;
   /** 1 = succeeded first time. */
   attempts: number;
+  /** Streaming only: time until the first text arrived, from the start of the call. */
+  firstTextMs?: number;
 }
 
 /** What callModel hands a provider for one attempt. */
@@ -71,6 +78,12 @@ export interface ProviderResponse {
 export interface LlmProvider {
   name: string;
   generate(req: ProviderRequest, signal: AbortSignal): Promise<ProviderResponse>;
+  /** Like generate, but calls onText with each new piece of text as it arrives. */
+  generateStream(
+    req: ProviderRequest,
+    signal: AbortSignal,
+    onText: (text: string) => void,
+  ): Promise<ProviderResponse>;
 }
 
 export class LlmError extends Error {
