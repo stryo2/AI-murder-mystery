@@ -1846,7 +1846,7 @@
       "characterId": "daniel",
       "factId": "f_daniel_collected_vial",
       "stance": "lie",
-      "lie": "It was only a quick trip to his compartment; nothing of note.",
+      "lie": "It was only a quick trip to his compartment to fetch his cigarettes from his suitcase.",
       "unlock": null
     },
     {
@@ -2779,7 +2779,6 @@
   },
   "openQuestions": [
     "Remaining gaps after v1.2. Characters must not invent answers to them.",
-    "Daniel's stated reason for the 21:30 trip to C3, if pressed beyond \"a quick trip to my compartment.\"",
     "The train guard who asks the detective to investigate is not defined as a character and cannot be questioned."
   ],
   "layout": {

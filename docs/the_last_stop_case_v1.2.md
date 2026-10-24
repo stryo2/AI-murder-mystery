@@ -189,6 +189,7 @@ This is separate from **Eleanor's letter**, the letter from her solicitor that A
 
 - The first conversation is true. The trip to C3 is true; he admits it because he knows the attendant saw him pass.
 - **The lie:** that he did not go back to C1.
+- **Stated reason for the C3 trip (if pressed):** he went to fetch his cigarettes from his suitcase. It hides the real reason, collecting the poison vial.
 
 **Cover story (once the visit is admitted):** The "one last discrepancy" was a double-billed Leith dock-fee invoice: _"a clerk's error, I wanted Arthur to see the correction before the board."_ The invoice is real, and it is one of the fraudulent ones in E4.
 
@@ -707,7 +708,6 @@ An accusation naming Daniel but missing the motive, the method or the opportunit
 
 Characters must not invent answers to these.
 
-- Daniel's stated reason for the 9:30 trip to C3, if pressed beyond "a quick trip to my compartment."
 - The train guard who asks the detective to investigate is not defined as a character and cannot be questioned.
 
 ---
