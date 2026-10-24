@@ -22,6 +22,7 @@ import { callModel, LlmError, type ChatMessage } from '../llm';
 import {
   appendTurn,
   getHistory,
+  getVerdict,
   MAX_MESSAGES_IN_PROMPT,
   SESSION_ID,
   tryLock,
@@ -112,6 +113,8 @@ function startTurn(req: Request, res: Response) {
   const knownEvidence = new Set(caseData.evidence.map((e) => e.id));
   const unknown = shownEvidenceIds.filter((id) => !knownEvidence.has(id));
   if (unknown.length) return fail(400, `Unknown evidence: ${unknown.join(', ')}`);
+
+  if (getVerdict(sessionId)) return fail(409, 'The case is closed.');
 
   // One question at a time per suspect, or two replies could be saved in the wrong order.
   if (!tryLock(sessionId, characterId)) {

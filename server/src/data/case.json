@@ -62,7 +62,18 @@
       },
       "partialSolve": "An accusation naming Daniel but missing the motive, the method or the opportunity is a partial solve. The game shows what was missing and does not count it as a full win.",
       "fullWinRequiresEvidenceIds": ["E8"],
-      "withoutE8": "Naming Daniel with the right motive and opportunity but without E8 is a partial solve. Ending text: \"You have the right man, but the case would not stand up in court.\""
+      "withoutE8": "Naming Daniel with the right motive and opportunity but without E8 is a partial solve. Ending text: \"You have the right man, but the case would not stand up in court.\"",
+      "grading": {
+        "motiveEvidenceIds": ["E4"],
+        "opportunityEvidenceIds": ["E3", "E7"],
+        "meansEvidenceIds": ["E8"]
+      },
+      "endings": {
+        "win": "Case closed. Daniel Cross is arrested at Perth, and the case against him is complete.",
+        "partial": "You have the right man, but there are gaps in your case.",
+        "partialNoMeans": "You have the right man, but the case would not stand up in court.",
+        "wrong": "The wrong person stands accused, and the killer walks off the train at Edinburgh."
+      }
     },
     "witnessClearance": {
       "hale": {
@@ -84,6 +95,18 @@
           "f_wax_match"
         ]
       }
+    },
+    "finalAnswer": "Daniel Cross poisoned Arthur Blackwood's brandy flask during his 21:41-21:44 visit to stop Arthur exposing his embezzlement.",
+    "deduction": [
+      "Arthur was well at 22:05 and ringing for help at 22:14, so the poison acted in that window. He drank safely from the flask at 21:39.",
+      "From 21:39 Hale watched C1's door. The only person who went in was Daniel, at 21:41-21:44. Maya saw him come out.",
+      "Daniel denied going back. Arthur's document case shows why he lied: the fraud ran through his office, and Arthur was taking it to his solicitor in the morning.",
+      "The dark-red wax caught in the flask cap matches the broken seal on the empty vial hidden in Daniel's suitcase."
+    ],
+    "cleared": {
+      "eleanor": "Eleanor had a real motive, but her visit to C1 was at 21:20-21:27, before the safe drink, and she stayed in C2 throughout. She hid the cry and thud at 22:14 out of shame, not guilt.",
+      "samuel": "Samuel had a real motive, but his visit was at 21:10-21:16, before the safe drink, and he was in C4 throughout.",
+      "maya": "Maya had a real motive and secrets of her own, but her visit was at 21:31-21:34, before the safe drink, and her one trip into the corridor was watched and never reached C1."
     }
   },
   "locations": [

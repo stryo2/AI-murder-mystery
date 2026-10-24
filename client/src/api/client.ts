@@ -1,4 +1,6 @@
 import type {
+  AccusationRequest,
+  AccusationStatus,
   ApiError,
   CaseBriefing,
   CharacterSummary,
@@ -10,6 +12,7 @@ import type {
   SceneResponse,
   SearchRequest,
   SearchResponse,
+  Verdict,
 } from '@mystery/shared';
 
 async function errorFrom(res: Response, label: string): Promise<Error> {
@@ -65,6 +68,9 @@ async function interrogateStream(
 export const api = {
   health: () => request<HealthResponse>('GET', '/health'),
   briefing: () => request<CaseBriefing>('GET', '/case'),
+  accusation: (sessionId: string) =>
+    request<AccusationStatus>('GET', `/accusation?${new URLSearchParams({ sessionId })}`),
+  accuse: (body: AccusationRequest) => request<Verdict>('POST', '/accusation', body),
   characters: () => request<CharacterSummary[]>('GET', '/characters'),
   history: (sessionId: string, characterId: string) =>
     request<HistoryResponse>(

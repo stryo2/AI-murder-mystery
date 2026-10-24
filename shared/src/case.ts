@@ -102,6 +102,31 @@ export interface Evidence {
   [key: string]: unknown;
 }
 
+/** Server only: the answer to the case. Never sent to the client before the game ends. */
+export interface Solution {
+  culpritId: string;
+  motive: string;
+  method: string;
+  opportunity: string;
+  /** One sentence: who, how, when, why. */
+  finalAnswer: string;
+  /** The reasoning, in order, as the player is shown it at the end. */
+  deduction: string[];
+  /** Why each innocent suspect is cleared, by character id. */
+  cleared: Record<string, string>;
+  accusation: {
+    /** Which found exhibits answer each question. Any one listed exhibit is enough. */
+    grading: {
+      motiveEvidenceIds: string[];
+      opportunityEvidenceIds: string[];
+      meansEvidenceIds: string[];
+    };
+    endings: { win: string; partial: string; partialNoMeans: string; wrong: string };
+    [key: string]: unknown;
+  };
+  [key: string]: unknown;
+}
+
 /** A spot the player can search. Searching it reveals every evidence item listed. */
 export interface SceneItem {
   id: string;
@@ -114,7 +139,7 @@ export interface SceneItem {
 
 export interface CaseData {
   meta: CaseMeta;
-  solution: Record<string, unknown>;
+  solution: Solution;
   locations: Location[];
   physicalRules: string[];
   characters: Character[];

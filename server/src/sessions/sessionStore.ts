@@ -1,7 +1,8 @@
-// In-memory game state, per session: conversation history per character, and which scene
-// items the player has searched. Week 3 moves this into Postgres; until then a server restart
-// forgets every game.
+// In-memory game state, per session: conversation history per character, which scene items
+// the player has searched, and the verdict once they accuse someone. Week 3 moves this into
+// Postgres; until then a server restart forgets every game.
 
+import type { Verdict } from '@mystery/shared';
 import type { ChatMessage } from '../llm';
 
 /** Idle games are dropped after this long. */
@@ -22,6 +23,8 @@ interface Session {
   conversations: Map<string, ChatMessage[]>;
   /** Scene item ids, in the order they were searched. */
   searchedItems: Set<string>;
+  /** Set once the player accuses someone; the game is over after that. */
+  verdict?: Verdict;
 }
 
 // A Map keeps insertion order; touching a session re-inserts it, so the first key is the oldest.
@@ -83,4 +86,12 @@ export function getSearchedItems(sessionId: string): Set<string> {
 
 export function markSearched(sessionId: string, itemId: string) {
   touch(sessionId).searchedItems.add(itemId);
+}
+
+export function getVerdict(sessionId: string): Verdict | undefined {
+  return touch(sessionId).verdict;
+}
+
+export function setVerdict(sessionId: string, verdict: Verdict) {
+  touch(sessionId).verdict = verdict;
 }

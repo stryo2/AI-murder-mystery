@@ -105,3 +105,31 @@ export interface HealthResponse {
   status: 'ok';
   time: string;
 }
+
+/** POST /api/accusation. Each *EvidenceId is a found exhibit, or null for "I can't show this". */
+export interface AccusationRequest {
+  sessionId: string;
+  culpritId: string;
+  motiveEvidenceId: string | null;
+  opportunityEvidenceId: string | null;
+  meansEvidenceId: string | null;
+}
+
+/** The end of the game. Once made, an accusation is final for that session. */
+export interface Verdict {
+  outcome: 'win' | 'partial' | 'wrong';
+  /** One-line ending. */
+  headline: string;
+  accusedName: string;
+  /** For a partial solve: what the case was missing, e.g. "the motive". */
+  missing: string[];
+  /** What really happened, revealed now that the game is over. */
+  truth: { culpritName: string; finalAnswer: string; deduction: string[] };
+  /** Why each innocent suspect is cleared. */
+  cleared: { name: string; reason: string }[];
+}
+
+/** GET /api/accusation: this game's verdict, or null if no one has been accused yet. */
+export interface AccusationStatus {
+  verdict: Verdict | null;
+}

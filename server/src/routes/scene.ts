@@ -20,7 +20,7 @@ import type {
 import { assetUrl } from '../data/assets';
 import { caseData } from '../data/case';
 import { toTwelveHourTimes } from '../engine/promptBuilder';
-import { getSearchedItems, markSearched, SESSION_ID } from '../sessions/sessionStore';
+import { getSearchedItems, getVerdict, markSearched, SESSION_ID } from '../sessions/sessionStore';
 
 export const sceneRouter = Router();
 
@@ -56,6 +56,8 @@ sceneRouter.post('/search', (req, res) => {
   if (typeof itemId !== 'string') return sendError(res, 400, '"itemId" must be a string');
   const item = caseData.sceneItems.find((i) => i.id === itemId);
   if (!item) return sendError(res, 404, `Nothing called "${itemId}" to search`);
+
+  if (getVerdict(sessionId)) return sendError(res, 409, 'The case is closed.');
 
   markSearched(sessionId, item.id); // searching twice is harmless
   res.json(view(item, getSearchedItems(sessionId)) satisfies SearchResponse);
