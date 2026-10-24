@@ -11,6 +11,8 @@ export interface CharacterSummary {
 }
 
 export interface InterrogateRequest {
+  /** One per playthrough, made by the client. Keys the conversation history. */
+  sessionId: string;
   characterId: string;
   question: string;
   /** Evidence the player is confronting the character with. */
@@ -20,6 +22,16 @@ export interface InterrogateRequest {
 export interface InterrogateResponse {
   characterId: string;
   reply: string;
+}
+
+export interface ConversationMessage {
+  from: 'player' | 'suspect';
+  text: string;
+}
+
+export interface HistoryResponse {
+  characterId: string;
+  messages: ConversationMessage[];
 }
 
 /** Body of any non-2xx API response. */

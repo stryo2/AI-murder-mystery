@@ -2,6 +2,7 @@ import type {
   ApiError,
   CharacterSummary,
   HealthResponse,
+  HistoryResponse,
   InterrogateRequest,
   InterrogateResponse,
 } from '@mystery/shared';
@@ -22,6 +23,11 @@ async function request<T>(method: 'GET' | 'POST', path: string, body?: unknown):
 export const api = {
   health: () => request<HealthResponse>('GET', '/health'),
   characters: () => request<CharacterSummary[]>('GET', '/characters'),
+  history: (sessionId: string, characterId: string) =>
+    request<HistoryResponse>(
+      'GET',
+      `/interrogate/history?${new URLSearchParams({ sessionId, characterId })}`,
+    ),
   interrogate: (body: InterrogateRequest) =>
     request<InterrogateResponse>('POST', '/interrogate', body),
 };

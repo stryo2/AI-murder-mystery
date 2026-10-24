@@ -38,6 +38,10 @@ body {
 }
 
 .chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
   padding: 1rem 1rem 0.75rem;
   border-bottom: 1px solid var(--border);
 }
@@ -164,4 +168,13 @@ button:disabled {
 .error button {
   padding: 0.25rem 0.75rem;
   font-size: 0.85rem;
+}
+
+button.secondary {
+  color: var(--accent);
+  background: transparent;
+  border: 1px solid var(--border);
+  padding: 0.35rem 0.8rem;
+  font-size: 0.85rem;
+  white-space: nowrap;
 }
