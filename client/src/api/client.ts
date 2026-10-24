@@ -1,5 +1,6 @@
 import type {
   ApiError,
+  CharacterSummary,
   HealthResponse,
   InterrogateRequest,
   InterrogateResponse,
@@ -20,6 +21,7 @@ async function request<T>(method: 'GET' | 'POST', path: string, body?: unknown):
 
 export const api = {
   health: () => request<HealthResponse>('GET', '/health'),
+  characters: () => request<CharacterSummary[]>('GET', '/characters'),
   interrogate: (body: InterrogateRequest) =>
     request<InterrogateResponse>('POST', '/interrogate', body),
 };

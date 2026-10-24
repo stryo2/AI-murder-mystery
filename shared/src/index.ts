@@ -2,6 +2,14 @@
 
 export type * from './case';
 
+/** What the client may know about a character: public info only, never secrets. */
+export interface CharacterSummary {
+  id: string;
+  name: string;
+  role: string;
+  type: 'suspect' | 'witness';
+}
+
 export interface InterrogateRequest {
   characterId: string;
   question: string;

@@ -1,10 +1,167 @@
 :root {
+  --bg: #1a1714;
+  --panel: #241f1a;
+  --text: #e8e2d4;
+  --muted: #a69c8a;
+  --accent: #c9a45c;
+  --player: #3a3026;
+  --suspect: #2b2620;
+  --border: #3d352c;
+  --error: #e08a7a;
+
   font-family: Georgia, 'Times New Roman', serif;
-  color: #e8e2d4;
-  background: #1a1714;
+  color: var(--text);
+  background: var(--bg);
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
+}
+
+.status {
   padding: 2rem;
+  text-align: center;
+  color: var(--muted);
+}
+
+/* Chat: header on top, messages fill the middle and scroll, composer at the bottom. */
+.chat {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.chat-header {
+  padding: 1rem 1rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.chat-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--accent);
+}
+
+.chat-header p {
+  margin: 0.25rem 0 0;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.empty {
+  margin: auto;
+  color: var(--muted);
+  font-style: italic;
+  text-align: center;
+}
+
+.message {
+  max-width: 85%;
+  padding: 0.6rem 0.85rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  line-height: 1.45;
+}
+
+.message p {
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.message.player {
+  align-self: flex-end;
+  background: var(--player);
+}
+
+.message.suspect {
+  align-self: flex-start;
+  background: var(--suspect);
+}
+
+.speaker {
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.2rem;
+}
+
+.thinking p {
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.error {
+  align-self: center;
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  color: var(--error);
+  font-size: 0.9rem;
+}
+
+.composer {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.composer textarea {
+  flex: 1;
+  resize: none;
+  font: inherit;
+  color: var(--text);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.6rem 0.75rem;
+}
+
+.composer textarea:focus,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+button {
+  font: inherit;
+  color: var(--bg);
+  background: var(--accent);
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1.1rem;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.error button {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.85rem;
 }
